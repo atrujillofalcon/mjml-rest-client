@@ -19,7 +19,7 @@ import java.util.*
  * @param <R> Request type
  * @author Arnaldo Trujillo
 </R> */
-abstract class HttpRestClient<R> protected constructor(protected var apiEndpoint: String) : RestClient<R> {
+internal abstract class HttpRestClient<R> protected constructor(protected var apiEndpoint: String) : RestClient<R> {
 
     lateinit var restTemplate: RestTemplate
 

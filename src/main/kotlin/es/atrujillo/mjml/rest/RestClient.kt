@@ -5,7 +5,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.util.MultiValueMap
 
-interface RestClient<R> {
+internal interface RestClient<R> {
 
     operator fun <T> get(path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>?, headers: HttpHeaders?): ResponseEntity<T>
 

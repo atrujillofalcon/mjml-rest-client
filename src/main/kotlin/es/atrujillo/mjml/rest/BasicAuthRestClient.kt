@@ -14,7 +14,7 @@ import java.net.URI
  * @author Arnaldo Trujillo
  * @param <R>
 </R> */
-class BasicAuthRestClient<R>(apiEndpoint: String, private val applicationID: String, private val secretKey: String) : HttpRestClient<R>(apiEndpoint) {
+internal class BasicAuthRestClient<R>(apiEndpoint: String, private val applicationID: String, private val secretKey: String) : HttpRestClient<R>(apiEndpoint) {
 
     init {
         restTemplate = configureRestTemplateWithBasicAuth()

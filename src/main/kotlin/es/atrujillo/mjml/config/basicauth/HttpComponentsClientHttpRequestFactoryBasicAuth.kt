@@ -11,7 +11,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import java.net.URI
 
 
-class HttpComponentsClientHttpRequestFactoryBasicAuth(private val host: HttpHost) : HttpComponentsClientHttpRequestFactory() {
+internal class HttpComponentsClientHttpRequestFactoryBasicAuth(private val host: HttpHost) : HttpComponentsClientHttpRequestFactory() {
 
     override fun createHttpContext(httpMethod: HttpMethod?, uri: URI?) = createHttpContext()
 
