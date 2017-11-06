@@ -1,6 +1,6 @@
 package es.atrujillo.test.service;
 
-import es.atrujillo.mjml.config.internal.MemoryMjmlAuthConf;
+import es.atrujillo.mjml.service.impl.MemoryMjmlAuthConf;
 import es.atrujillo.mjml.service.definition.MjmlAuthConf;
 import es.atrujillo.mjml.service.definition.MjmlService;
 import es.atrujillo.mjml.service.impl.MjmlRestService;

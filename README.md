@@ -11,6 +11,27 @@ Mjml is the best responsive mail framework, I love it <3 . I created this projec
 * [Spring Rest Template](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) - Used to communicate with API
 * [Jackson](https://github.com/FasterXML/jackson-databind) - Best databind Java library
 
+## Usage
+
+Import the library into your project. Configure the MjmlApi credentials for your project and instantiate a MjmlService object
+
+```
+MjmlAuthConf authConf = new MemoryMjmlAuthConf(applicationId, secretKey);
+MjmlService mjmlService = new MjmlRestService(authConf);
+
+String resultHtmlMail = mjmlService.transpileMjmlToHtml(mjmlTemplate);
+//after obtain the html you can send it using your email service implementation.
+```
+
+
+## Running the tests
+
+Execute from root folder:
+
+```
+gradle test
+```
+
 ## Author
 
  [**Arnaldo Trujillo**](https://github.com/atrujillofalcon)
