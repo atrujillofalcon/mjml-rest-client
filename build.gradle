@@ -4,20 +4,25 @@ buildscript {
     ext.jackson_version = '2.9.2'
 
     repositories {
-        mavenCentral()
-        mavenLocal()
+        jcenter()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1+"
     }
 }
 
 group 'es.atrujillo.mjml'
-version '1.0.0'
+version '1.0.1-SNAPSHOT'
+
+plugins {
+    id 'net.researchgate.release' version '2.4.0'
+}
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'maven'
+apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = 1.8
 
@@ -41,6 +46,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile "org.springframework:spring-test:4.3.9.RELEASE"
+
 }
 
 compileKotlin {
@@ -48,4 +54,46 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    configurations = ['archives']
+    pkg {
+        repo = 'mjml-rest-client'
+        name = 'mjml-rest-client-release'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/atrujillofalcon/mjml-rest-client.git'
+    }
+}
+
+release {
+    failOnCommitNeeded = true
+    failOnPublishNeeded = true
+    failOnSnapshotDependencies = true
+    failOnUnversionedFiles = true
+    failOnUpdateNeeded = true
+    revertOnFail = true
+    preCommitText = ''
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = '${version}'
+    versionPropertyFile = 'gradle.properties'
+    scmAdapters = [
+            net.researchgate.release.GitAdapter,
+            net.researchgate.release.SvnAdapter,
+            net.researchgate.release.HgAdapter,
+            net.researchgate.release.BzrAdapter
+    ]
+
+    git {
+        requireBranch = 'master'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
+        signTag = false
+    }
 }

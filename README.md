@@ -1,7 +1,7 @@
 # Mjml Rest Client
 
 Mjml is the best responsive mail framework, I love it <3 . I created this project to have a Java library that use the
-**mjml API**.
+**mjml API** to convert a mjml template into valid html ready to use.
 
 
 ## Built With
