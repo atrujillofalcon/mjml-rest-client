@@ -12,12 +12,13 @@ buildscript {
     }
 }
 
-group 'es.atrujillo.mjml'
-version '1.0.1-SNAPSHOT'
-
 plugins {
     id 'net.researchgate.release' version '2.4.0'
 }
+
+group 'es.atrujillo.mjml'
+version '1.0.1-SNAPSHOT'
+
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
@@ -73,7 +74,7 @@ release {
     failOnCommitNeeded = true
     failOnPublishNeeded = true
     failOnSnapshotDependencies = true
-    failOnUnversionedFiles = true
+    failOnUnversionedFiles = false
     failOnUpdateNeeded = true
     revertOnFail = true
     preCommitText = ''
@@ -94,6 +95,5 @@ release {
         pushToRemote = 'origin'
         pushToBranchPrefix = ''
         commitVersionFileOnly = false
-        signTag = false
     }
 }
