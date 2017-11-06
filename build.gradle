@@ -93,3 +93,5 @@ release {
         commitVersionFileOnly = false
     }
 }
+
+afterReleaseBuild.dependsOn bintrayUpload

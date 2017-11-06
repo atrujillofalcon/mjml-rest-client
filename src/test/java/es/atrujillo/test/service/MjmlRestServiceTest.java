@@ -16,6 +16,9 @@ public class MjmlRestServiceTest {
 
     private static final String HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>";
 
+    /**
+     * Test that valid mjml template is converted to html using MjmlService
+     */
     @Test
     public void testThatMjmlApiRespondCorrectly(){
         MjmlAuthConf authConf = new MemoryMjmlAuthConf("f68687ee-f4cf-43d7-a535-8a7cebd9fd03",
