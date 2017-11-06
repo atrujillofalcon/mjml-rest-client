@@ -84,9 +84,6 @@ release {
     versionPropertyFile = 'gradle.properties'
     scmAdapters = [
             net.researchgate.release.GitAdapter,
-            net.researchgate.release.SvnAdapter,
-            net.researchgate.release.HgAdapter,
-            net.researchgate.release.BzrAdapter
     ]
 
     git {
