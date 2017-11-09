@@ -11,6 +11,49 @@ Mjml is the best responsive mail framework, I love it <3 . I created this projec
 * [Spring Rest Template](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) - Used to communicate with API
 * [Jackson](https://github.com/FasterXML/jackson-databind) - Best databind Java library
 
+
+### Installing
+
+To include this library in your project you first have to configure jcenter repository. 
+
+If your project is built with Maven you have to add this to pom.xml:
+
+```
+<repositories>
+    <repository>
+      <id>jcenter</id>
+      <url>https://jcenter.bintray.com/</url>
+    </repository>
+</repositories>
+
+```
+
+In Gradle we have to indicate jcenter repository inside of buildscript:
+
+```
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+```
+
+After configure jcenter repository we only need to add the library as dependency:
+
+**Maven**:
+```
+<dependency>
+            <groupId>es.atrujillo.mjml</groupId>
+            <artifactId>mjml-rest-client</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+```
+
+**Gradle**:
+```
+compile "es.atrujillo.mjml:mjml-rest-client:1.0.5"
+```
+
 ## Usage
 
 Import the library into your project. Configure the MjmlApi credentials for your project and instantiate a MjmlService object
