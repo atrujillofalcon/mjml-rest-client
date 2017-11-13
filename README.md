@@ -69,6 +69,8 @@ String resultHtmlMail = mjmlService.transpileMjmlToHtml(mjmlTemplate);
 
 ## Running the tests
 
+First you have to set **MJML_APP_ID** and **MJML_SECRET_KEY** environment variables.
+
 Execute from root folder:
 
 ```
