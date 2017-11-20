@@ -85,7 +85,7 @@ publishing {
         MavenCentral(MavenPublication) {
             from components.java
             groupId 'es.atrujillo.mjml'
-            artifactId 'mjml-rest-template'
+            artifactId 'mjml-rest-client'
             version project.property('version')
             pom.withXml {
                 def root = asNode()
