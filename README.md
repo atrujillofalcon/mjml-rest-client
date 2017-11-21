@@ -14,44 +14,20 @@ Mjml is the best responsive mail framework, I love it :heart:. I created this pr
 
 ### Installing
 
-To include this library in your project you first have to configure jcenter repository. 
-
-If your project is built with Maven you have to add this to pom.xml:
-
-```
-<repositories>
-    <repository>
-      <id>jcenter</id>
-      <url>https://jcenter.bintray.com/</url>
-    </repository>
-</repositories>
-
-```
-
-In Gradle we have to indicate jcenter repository inside of buildscript:
-
-```
-buildscript {
-    repositories {
-        jcenter()
-    }
-}
-```
-
-After configure jcenter repository we only need to add the library as dependency:
+To include this library into your project your only need to add the dependency.
 
 **Maven**:
 ```
 <dependency>
             <groupId>es.atrujillo.mjml</groupId>
             <artifactId>mjml-rest-client</artifactId>
-            <version>1.0.5</version>
+            <version>1.1.0</version>
         </dependency>
 ```
 
 **Gradle**:
 ```
-compile "es.atrujillo.mjml:mjml-rest-client:1.0.5"
+compile "es.atrujillo.mjml:mjml-rest-client:1.1.0"
 ```
 
 ## Usage
