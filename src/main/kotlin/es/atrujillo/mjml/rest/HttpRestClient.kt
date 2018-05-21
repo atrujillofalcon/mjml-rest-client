@@ -14,7 +14,6 @@ import java.net.URI
 import java.util.*
 
 /**
- * Rest client to connect to Cetelem ApiGateway
  *
  * @param <R> Request type
  * @author Arnaldo Trujillo
