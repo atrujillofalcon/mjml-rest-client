@@ -76,7 +76,7 @@ def pomConfig = {
     }
 
     scm {
-        url "git@github.com:atrujillofalcon/mjml-rest-client.git"
+        url "https://github.com/atrujillofalcon/mjml-rest-client"
     }
 }
 
