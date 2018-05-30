@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = '1.2.41'
     ext.spring_version = '5.0.6.RELEASE'
     ext.jackson_version = '2.9.5'
-   
+
     repositories {
         jcenter()
     }
@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-    id 'net.researchgate.release' version '2.4.0'
+    id 'net.researchgate.release' version '2.6.0'
     id "com.jfrog.bintray" version "1.7.3"
 }
 
