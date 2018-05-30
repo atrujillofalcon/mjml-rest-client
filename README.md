@@ -21,15 +21,15 @@ To include this library into your project your only need to add the dependency.
 **Maven**:
 ```
 <dependency>
-            <groupId>es.atrujillo.mjml</groupId>
-            <artifactId>mjml-rest-client</artifactId>
-            <version>1.1.0</version>
-        </dependency>
+    <groupId>es.atrujillo.mjml</groupId>
+    <artifactId>mjml-rest-client</artifactId>
+    <version>1.2.2</version>
+</dependency>
 ```
 
 **Gradle**:
 ```
-compile "es.atrujillo.mjml:mjml-rest-client:1.1.0"
+compile "es.atrujillo.mjml:mjml-rest-client:1.2.2"
 ```
 
 ## Usage
