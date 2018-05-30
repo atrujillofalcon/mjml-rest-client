@@ -46,7 +46,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile "org.springframework:spring-test:4.3.9.RELEASE"
+    testCompile "org.springframework:spring-test:5.0.6.RELEASE"
 
 }
 
