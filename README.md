@@ -1,5 +1,7 @@
 # Mjml Rest Client
 
+[![CircleCI](https://circleci.com/gh/atrujillofalcon/mjml-rest-client.svg?style=svg)](https://circleci.com/gh/atrujillofalcon/mjml-rest-client)
+
 [Mjml](https://mjml.io/) is the best responsive mail framework, I love it :heart:. I created this project to have a Java library that use the
 **mjml API** to convert a mjml template into valid html ready to use.
 
@@ -19,15 +21,15 @@ To include this library into your project your only need to add the dependency.
 **Maven**:
 ```
 <dependency>
-            <groupId>es.atrujillo.mjml</groupId>
-            <artifactId>mjml-rest-client</artifactId>
-            <version>1.1.0</version>
-        </dependency>
+    <groupId>es.atrujillo.mjml</groupId>
+    <artifactId>mjml-rest-client</artifactId>
+    <version>1.2.2</version>
+</dependency>
 ```
 
 **Gradle**:
 ```
-compile "es.atrujillo.mjml:mjml-rest-client:1.1.0"
+compile "es.atrujillo.mjml:mjml-rest-client:1.2.2"
 ```
 
 ## Usage
