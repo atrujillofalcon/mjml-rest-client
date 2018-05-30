@@ -1,8 +1,8 @@
 buildscript {
     ext.kotlin_version = '1.2.41'
-    ext.spring_version = '4.3.11.RELEASE'
+    ext.spring_version = '5.0.6.RELEASE'
     ext.jackson_version = '2.9.5'
-
+   
     repositories {
         jcenter()
     }
@@ -39,14 +39,14 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
 
-    compile "org.apache.httpcomponents:httpclient:4.5.3"
+    compile "org.apache.httpcomponents:httpclient:4.5.5"
     compile "javax.validation:validation-api:2.0.1.Final"
 
     compile "org.slf4j:slf4j-api:1.7.25"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile "org.springframework:spring-test:4.3.9.RELEASE"
+    testCompile "org.springframework:spring-test:5.0.6.RELEASE"
 
 }
 
@@ -130,7 +130,7 @@ release {
     ]
 
     git {
-        requireBranch = 'master'
+        requireBranch = 'develop'
         pushToRemote = 'origin'
         pushToBranchPrefix = ''
         commitVersionFileOnly = false
