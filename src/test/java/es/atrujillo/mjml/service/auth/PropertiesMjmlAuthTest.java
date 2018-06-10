@@ -36,7 +36,12 @@ class PropertiesMjmlAuthTest {
         URI mockURI = Mockito.mock(URI.class);
         Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
 
-        mjmlAuth = new PropertiesMjmlAuth(properties, appIDPropKey, secretKeyPropKey, mockURI);
+        mjmlAuth = MjmlAuthFactory.builder()
+                .whitPropertiesCredential()
+                .properties(properties)
+                .mjmlKeyNames(appIDPropKey, secretKeyPropKey)
+                .changeEndpoint(mockURI)
+                .build();
 
     }
 
@@ -54,24 +59,49 @@ class PropertiesMjmlAuthTest {
     @Test
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new PropertiesMjmlAuth(properties, null, null);
+            MjmlAuthFactory.builder()
+                    .whitPropertiesCredential()
+                    .properties(properties)
+                    .mjmlKeyNames(null, null)
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new PropertiesMjmlAuth(properties, UUID.randomUUID().toString(), null);
+            MjmlAuthFactory.builder()
+                    .whitPropertiesCredential()
+                    .properties(properties)
+                    .mjmlKeyNames(UUID.randomUUID().toString(), null)
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new PropertiesMjmlAuth(properties, null, UUID.randomUUID().toString());
+            MjmlAuthFactory.builder()
+                    .whitPropertiesCredential()
+                    .properties(properties)
+                    .mjmlKeyNames(null, UUID.randomUUID().toString())
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new PropertiesMjmlAuth(properties, UUID.randomUUID().toString(), UUID.randomUUID().toString(), null);
+            MjmlAuthFactory.builder()
+                    .whitPropertiesCredential()
+                    .properties(properties)
+                    .mjmlKeyNames(UUID.randomUUID().toString(), UUID.randomUUID().toString())
+                    .changeEndpoint(null)
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new PropertiesMjmlAuth(properties, "invalid",secretKeyPropKey);
-            mjmlAuth.getMjmlApplicationId();
+            MjmlAuth testMjmlAuth = MjmlAuthFactory.builder()
+                    .whitPropertiesCredential()
+                    .properties(properties)
+                    .mjmlKeyNames("invalid", secretKeyPropKey)
+                    .build();
+            testMjmlAuth.getMjmlApplicationId();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new PropertiesMjmlAuth(properties, appIDPropKey,"invalid");
-            mjmlAuth.getMjmlApplicationSecretKey();
+            MjmlAuth testMjmlAuth = MjmlAuthFactory.builder()
+                    .whitPropertiesCredential()
+                    .properties(properties)
+                    .mjmlKeyNames(appIDPropKey,"invalid")
+                    .build();
+            testMjmlAuth.getMjmlApplicationSecretKey();
         });
 
     }

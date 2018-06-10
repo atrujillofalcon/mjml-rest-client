@@ -3,7 +3,7 @@ package es.atrujillo.mjml.integration.service;
 import es.atrujillo.mjml.config.template.TemplateFactory;
 import es.atrujillo.mjml.config.template.TemplateType;
 import es.atrujillo.mjml.service.auth.MjmlAuth;
-import es.atrujillo.mjml.service.auth.SystemEnvironmentMjmlAuth;
+import es.atrujillo.mjml.service.auth.MjmlAuthFactory;
 import es.atrujillo.mjml.service.definition.MjmlService;
 import es.atrujillo.mjml.service.impl.MjmlRestService;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +37,10 @@ class MjmlRestServiceTest {
                 .template(HELLO_WORLD_MJML)
                 .buildTemplate();
 
-        MjmlAuth authConf = new SystemEnvironmentMjmlAuth(MJML_APP_ID, MJML_SECRET_KEY);
+        MjmlAuth authConf = MjmlAuthFactory.builder()
+                .whitEnviromentCredentials()
+                .mjmlKeyNames(MJML_APP_ID, MJML_SECRET_KEY)
+                .build();
 
         MjmlService mjmlService = new MjmlRestService(authConf);
         String response = mjmlService.transpileMjmlToHtml(template);

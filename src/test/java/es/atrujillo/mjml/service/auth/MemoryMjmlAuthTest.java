@@ -18,7 +18,10 @@ class MemoryMjmlAuthTest {
     void testAuthInstance() {
         appID = UUID.randomUUID().toString();
         secretKey = UUID.randomUUID().toString();
-        mjmlAuth = new MemoryMjmlAuth(appID, secretKey);
+        mjmlAuth = MjmlAuthFactory.builder()
+                .whitMemoryCredentials()
+                .mjmlCredentials(appID, secretKey)
+                .build();
 
         Assertions.assertNotNull(mjmlAuth);
         Assertions.assertNotNull(mjmlAuth.getMjmlApplicationId());
@@ -29,7 +32,12 @@ class MemoryMjmlAuthTest {
 
         URI mockURI = Mockito.mock(URI.class);
         Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
-        mjmlAuth = new MemoryMjmlAuth(appID, secretKey, mockURI);
+        mjmlAuth = MjmlAuthFactory.builder()
+                .whitMemoryCredentials()
+                .mjmlCredentials(appID, secretKey)
+                .changeEndpoint(mockURI)
+                .build();
+
         Assertions.assertEquals(DUMMY_URI_STRING, mjmlAuth.getMjmlApiEndpoint().toString());
 
     }
@@ -37,16 +45,29 @@ class MemoryMjmlAuthTest {
     @Test
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(null, null);
+            mjmlAuth = MjmlAuthFactory.builder()
+                    .whitMemoryCredentials()
+                    .mjmlCredentials(null, null)
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(UUID.randomUUID().toString(), null);
+            mjmlAuth = MjmlAuthFactory.builder()
+                    .whitMemoryCredentials()
+                    .mjmlCredentials(UUID.randomUUID().toString(), null)
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(null, UUID.randomUUID().toString());
+            mjmlAuth = MjmlAuthFactory.builder()
+                    .whitMemoryCredentials()
+                    .mjmlCredentials(null, UUID.randomUUID().toString())
+                    .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(UUID.randomUUID().toString(), UUID.randomUUID().toString(), null);
+            MjmlAuthFactory.builder()
+                    .whitMemoryCredentials()
+                    .mjmlCredentials(UUID.randomUUID().toString(), UUID.randomUUID().toString())
+                    .changeEndpoint(null)
+                    .build();
         });
 
     }
