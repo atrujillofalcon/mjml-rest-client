@@ -1,0 +1,17 @@
+<mjml>
+    <mj-body>
+        <mj-container>
+            <mj-section>
+                <mj-column>
+                    <mj-text th:text="${message}"></mj-text>
+                </mj-column>
+                <mj-column th:if="${number>0}">
+                    <mj-text>Positive Column</mj-text>
+                </mj-column>
+                <mj-column th:if="${number<0}">
+                    <mj-text>Negative Column</mj-text>
+                </mj-column>
+            </mj-section>
+        </mj-container>
+    </mj-body>
+</mjml>

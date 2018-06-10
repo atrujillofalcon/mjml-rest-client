@@ -1,13 +1,16 @@
-package es.atrujillo.test.service;
+package es.atrujillo.test.integration.service;
 
+import es.atrujillo.mjml.config.template.TemplateFactory;
+import es.atrujillo.mjml.config.template.TemplateType;
 import es.atrujillo.mjml.service.definition.MjmlAuthConf;
 import es.atrujillo.mjml.service.definition.MjmlService;
 import es.atrujillo.mjml.service.impl.MemoryMjmlAuthConf;
 import es.atrujillo.mjml.service.impl.MjmlRestService;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author Arnaldo Trujillo
@@ -23,14 +26,20 @@ public class MjmlRestServiceTest {
      * Test that valid mjml template is converted to html using MjmlService
      */
     @Test
+    @DisplayName("Integration API test")
     public void testThatMjmlApiRespondCorrectly() {
         assertNotNull("You have to configure environment variable MJML_APP_ID", MJML_APP_ID);
         assertNotNull("You have to configure environment variable MJML_SECRET_KEY", MJML_SECRET_KEY);
 
+        String template = TemplateFactory.builder()
+                .type(TemplateType.STRING)
+                .template(HELLO_WORLD_MJML)
+                .buildTemplate();
+
         MjmlAuthConf authConf = new MemoryMjmlAuthConf(MJML_APP_ID, MJML_SECRET_KEY);
 
         MjmlService mjmlService = new MjmlRestService(authConf);
-        String response = mjmlService.transpileMjmlToHtml(HELLO_WORLD_MJML);
+        String response = mjmlService.transpileMjmlToHtml(template);
 
         assertNotNull(response);
         assertFalse(response.isEmpty());
