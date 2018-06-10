@@ -52,7 +52,7 @@ dependencies {
     compile "org.slf4j:slf4j-api:1.7.25"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
     testCompile 'org.mockito:mockito-core:2.18.3'
     testCompile "org.springframework:spring-test:5.0.6.RELEASE"
 
