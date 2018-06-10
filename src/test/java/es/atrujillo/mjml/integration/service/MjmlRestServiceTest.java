@@ -3,8 +3,8 @@ package es.atrujillo.mjml.integration.service;
 import es.atrujillo.mjml.config.template.TemplateFactory;
 import es.atrujillo.mjml.config.template.TemplateType;
 import es.atrujillo.mjml.service.auth.MjmlAuth;
+import es.atrujillo.mjml.service.auth.SystemEnvironmentMjmlAuth;
 import es.atrujillo.mjml.service.definition.MjmlService;
-import es.atrujillo.mjml.service.auth.MemoryMjmlAuth;
 import es.atrujillo.mjml.service.impl.MjmlRestService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,8 @@ class MjmlRestServiceTest {
 
     private static final String HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>";
 
-    private static final String MJML_APP_ID = System.getenv("MJML_APP_ID");
-    private static final String MJML_SECRET_KEY = System.getenv("MJML_SECRET_KEY");
+    private static final String MJML_APP_ID = "MJML_APP_ID";
+    private static final String MJML_SECRET_KEY = "MJML_SECRET_KEY";
 
     /**
      * Test that valid mjml template is converted to html using MjmlService
@@ -28,6 +28,7 @@ class MjmlRestServiceTest {
     @Test
     @DisplayName("Integration API test")
     void testThatMjmlApiRespondCorrectly() {
+
         assertNotNull( MJML_APP_ID,"You have to configure environment variable MJML_APP_ID");
         assertNotNull(MJML_SECRET_KEY,"You have to configure environment variable MJML_SECRET_KEY");
 
@@ -36,7 +37,7 @@ class MjmlRestServiceTest {
                 .template(HELLO_WORLD_MJML)
                 .buildTemplate();
 
-        MjmlAuth authConf = new MemoryMjmlAuth(MJML_APP_ID, MJML_SECRET_KEY);
+        MjmlAuth authConf = new SystemEnvironmentMjmlAuth(MJML_APP_ID, MJML_SECRET_KEY);
 
         MjmlService mjmlService = new MjmlRestService(authConf);
         String response = mjmlService.transpileMjmlToHtml(template);

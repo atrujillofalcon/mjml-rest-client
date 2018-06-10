@@ -20,15 +20,10 @@ class SystemEnvironmentMjmlAuth(val mjmlAppIdKeyName: String, val mjmlSecretKeyN
     override fun getMjmlApiEndpoint(): URI = mjmlApiEndpoint
 
     private fun validateThatSystemVariableExistsAndGetValue(key: String): String {
-        if (getEnvironmentVariables().containsKey(key))
+        if (System.getenv().containsKey(key))
             return System.getenv(key)
 
         throw IllegalArgumentException("System environment don't contains a variable with $key key")
-    }
-
-    companion object {
-
-        fun getEnvironmentVariables(): Map<String, String> = System.getenv()
     }
 
 }

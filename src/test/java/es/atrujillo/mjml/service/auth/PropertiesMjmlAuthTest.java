@@ -51,22 +51,30 @@ class PropertiesMjmlAuthTest {
         Assertions.assertEquals(DUMMY_URI_STRING, mjmlAuth.getMjmlApiEndpoint().toString());
     }
 
-    /*@Test
+    @Test
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(null, null);
+            mjmlAuth = new PropertiesMjmlAuth(properties, null, null);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(UUID.randomUUID().toString(), null);
+            mjmlAuth = new PropertiesMjmlAuth(properties, UUID.randomUUID().toString(), null);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(null, UUID.randomUUID().toString());
+            mjmlAuth = new PropertiesMjmlAuth(properties, null, UUID.randomUUID().toString());
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuth = new MemoryMjmlAuth(UUID.randomUUID().toString(), UUID.randomUUID().toString(), null);
+            mjmlAuth = new PropertiesMjmlAuth(properties, UUID.randomUUID().toString(), UUID.randomUUID().toString(), null);
+        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            mjmlAuth = new PropertiesMjmlAuth(properties, "invalid",secretKeyPropKey);
+            mjmlAuth.getMjmlApplicationId();
+        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            mjmlAuth = new PropertiesMjmlAuth(properties, appIDPropKey,"invalid");
+            mjmlAuth.getMjmlApplicationSecretKey();
         });
 
-    }*/
+    }
 
 }
 
