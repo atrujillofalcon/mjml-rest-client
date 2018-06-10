@@ -1,4 +1,4 @@
-package es.atrujillo.mjml.service.definition
+package es.atrujillo.mjml.service.auth
 
 import java.net.URI
 

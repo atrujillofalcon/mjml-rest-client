@@ -1,6 +1,6 @@
 package es.atrujillo.mjml.rest
 
-import es.atrujillo.mjml.config.basicauth.HttpComponentsClientHttpRequestFactoryBasicAuth
+import es.atrujillo.mjml.config.http.basicauth.HttpComponentsClientHttpRequestFactoryBasicAuth
 import org.apache.http.HttpHost
 import org.springframework.http.client.support.BasicAuthorizationInterceptor
 import org.springframework.web.client.RestTemplate

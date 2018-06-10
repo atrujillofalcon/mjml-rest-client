@@ -1,6 +1,5 @@
-package es.atrujillo.mjml.service.impl
+package es.atrujillo.mjml.service.auth
 
-import es.atrujillo.mjml.service.definition.MjmlAuthConf
 import java.net.URI
 
 /**

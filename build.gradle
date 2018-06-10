@@ -1,3 +1,5 @@
+import net.researchgate.release.GitAdapter
+
 buildscript {
     ext.kotlin_version = '1.2.41'
     ext.spring_version = '5.0.6.RELEASE'
@@ -51,7 +53,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
-    testCompile 'org.mockito:mockito-android:2.18.3'
+    testCompile 'org.mockito:mockito-core:2.18.3'
     testCompile "org.springframework:spring-test:5.0.6.RELEASE"
 
 }
@@ -132,7 +134,7 @@ release {
     tagTemplate = '${version}'
     versionPropertyFile = 'gradle.properties'
     scmAdapters = [
-            net.researchgate.release.GitAdapter,
+            GitAdapter,
     ]
 
     git {

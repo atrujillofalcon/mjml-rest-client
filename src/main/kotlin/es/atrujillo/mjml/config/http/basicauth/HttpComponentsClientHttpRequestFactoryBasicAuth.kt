@@ -1,4 +1,4 @@
-package es.atrujillo.mjml.config.basicauth
+package es.atrujillo.mjml.config.http.basicauth
 
 import org.apache.http.HttpHost
 import org.apache.http.client.protocol.HttpClientContext

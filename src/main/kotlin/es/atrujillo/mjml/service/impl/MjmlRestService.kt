@@ -1,11 +1,9 @@
 package es.atrujillo.mjml.service.impl
 
-import es.atrujillo.mjml.config.template.TemplateFactory
-import es.atrujillo.mjml.config.template.TemplateType
 import es.atrujillo.mjml.model.mjml.MjmlRequest
 import es.atrujillo.mjml.model.mjml.MjmlResponse
 import es.atrujillo.mjml.rest.BasicAuthRestClient
-import es.atrujillo.mjml.service.definition.MjmlAuthConf
+import es.atrujillo.mjml.service.auth.MjmlAuthConf
 import es.atrujillo.mjml.service.definition.MjmlService
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.ResponseEntity
@@ -23,8 +21,7 @@ class MjmlRestService(private val authConf: MjmlAuthConf) : MjmlService {
 
         val request = MjmlRequest(mjmlBody)
 
-        return Optional.of(restClient.post(request, TRANSPILE_RENDER_MJML_PATH,
-                object : ParameterizedTypeReference<MjmlResponse>() {}, null, null))
+        return Optional.of(restClient.post(request, TRANSPILE_RENDER_MJML_PATH, object : ParameterizedTypeReference<MjmlResponse>() {}, null, null))
                 .filter { mjmlResponseEntity -> mjmlResponseEntity.statusCode.is2xxSuccessful }
                 .map { response: ResponseEntity<MjmlResponse>? -> response!!.body }
                 .map { body -> body.html }
@@ -32,6 +29,6 @@ class MjmlRestService(private val authConf: MjmlAuthConf) : MjmlService {
     }
 
     companion object {
-        private val TRANSPILE_RENDER_MJML_PATH = "/render"
+        private const val TRANSPILE_RENDER_MJML_PATH = "/render"
     }
 }

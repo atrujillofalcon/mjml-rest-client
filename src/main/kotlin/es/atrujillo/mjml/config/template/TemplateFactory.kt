@@ -33,10 +33,10 @@ class TemplateFactory private constructor(templateEngine: TemplateEngine) {
 
         class Builder : TemplateTypeStep, BuildStep {
 
-            lateinit var templateType: TemplateType
-            var context: IContext = Context()
-            var fileTemplate: File? = null
-            var stringTemplate: String? = null
+            private lateinit var templateType: TemplateType
+            private var context: IContext = Context()
+            private var fileTemplate: File? = null
+            private var stringTemplate: String? = null
 
 
             override fun type(type: TemplateType): BuildStep {

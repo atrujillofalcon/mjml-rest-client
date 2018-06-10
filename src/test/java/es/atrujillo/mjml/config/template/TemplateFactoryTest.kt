@@ -4,11 +4,9 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.thymeleaf.context.Context
-
 import java.io.File
 import java.net.URL
-import java.util.Locale
-import java.util.Objects
+import java.util.*
 
 class TemplateFactoryTest {
 
@@ -78,7 +76,7 @@ class TemplateFactoryTest {
     }
 
     companion object {
-        private val HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>"
+        private const val HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>"
     }
 
 }
