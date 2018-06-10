@@ -9,10 +9,10 @@ import org.mockito.Mockito;
 import java.net.URI;
 import java.util.*;
 
-class PropertiesMjmlAuthConfTest {
+class PropertiesMjmlAuthTest {
 
     private final static String DUMMY_URI_STRING = "http://localhost/mjml";
-    private MjmlAuthConf mjmlAuthConf;
+    private MjmlAuth mjmlAuth;
     private String appIDPropKey;
     private String secretKeyPropKey;
     private String appIdVal;
@@ -36,34 +36,34 @@ class PropertiesMjmlAuthConfTest {
         URI mockURI = Mockito.mock(URI.class);
         Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
 
-        mjmlAuthConf = new PropertiesMjmlAuthConf(properties, appIDPropKey, secretKeyPropKey, mockURI);
+        mjmlAuth = new PropertiesMjmlAuth(properties, appIDPropKey, secretKeyPropKey, mockURI);
 
     }
 
     @Test
     void testAuthInstance() {
-        Assertions.assertNotNull(mjmlAuthConf);
-        Assertions.assertNotNull(mjmlAuthConf.getMjmlApplicationId());
-        Assertions.assertNotNull(mjmlAuthConf.getMjmlApplicationSecretKey());
-        Assertions.assertNotNull(mjmlAuthConf.getMjmlApiEndpoint());
-        Assertions.assertEquals(appIdVal, mjmlAuthConf.getMjmlApplicationId());
-        Assertions.assertEquals(secretKeyVal, mjmlAuthConf.getMjmlApplicationSecretKey());
-        Assertions.assertEquals(DUMMY_URI_STRING, mjmlAuthConf.getMjmlApiEndpoint().toString());
+        Assertions.assertNotNull(mjmlAuth);
+        Assertions.assertNotNull(mjmlAuth.getMjmlApplicationId());
+        Assertions.assertNotNull(mjmlAuth.getMjmlApplicationSecretKey());
+        Assertions.assertNotNull(mjmlAuth.getMjmlApiEndpoint());
+        Assertions.assertEquals(appIdVal, mjmlAuth.getMjmlApplicationId());
+        Assertions.assertEquals(secretKeyVal, mjmlAuth.getMjmlApplicationSecretKey());
+        Assertions.assertEquals(DUMMY_URI_STRING, mjmlAuth.getMjmlApiEndpoint().toString());
     }
 
     /*@Test
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuthConf = new MemoryMjmlAuthConf(null, null);
+            mjmlAuth = new MemoryMjmlAuth(null, null);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuthConf = new MemoryMjmlAuthConf(UUID.randomUUID().toString(), null);
+            mjmlAuth = new MemoryMjmlAuth(UUID.randomUUID().toString(), null);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuthConf = new MemoryMjmlAuthConf(null, UUID.randomUUID().toString());
+            mjmlAuth = new MemoryMjmlAuth(null, UUID.randomUUID().toString());
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mjmlAuthConf = new MemoryMjmlAuthConf(UUID.randomUUID().toString(), UUID.randomUUID().toString(), null);
+            mjmlAuth = new MemoryMjmlAuth(UUID.randomUUID().toString(), UUID.randomUUID().toString(), null);
         });
 
     }*/

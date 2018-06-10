@@ -3,7 +3,7 @@ package es.atrujillo.mjml.service.impl
 import es.atrujillo.mjml.model.mjml.MjmlRequest
 import es.atrujillo.mjml.model.mjml.MjmlResponse
 import es.atrujillo.mjml.rest.BasicAuthRestClient
-import es.atrujillo.mjml.service.auth.MjmlAuthConf
+import es.atrujillo.mjml.service.auth.MjmlAuth
 import es.atrujillo.mjml.service.definition.MjmlService
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.ResponseEntity
@@ -12,7 +12,7 @@ import java.util.*
 /**
  * @author Arnaldo Trujillo
  */
-class MjmlRestService(private val authConf: MjmlAuthConf) : MjmlService {
+class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
 
     override fun transpileMjmlToHtml(mjmlBody: String): String {
 
