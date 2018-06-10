@@ -1,5 +1,7 @@
 package es.atrujillo.mjml.service.impl
 
+import es.atrujillo.mjml.config.template.TemplateFactory
+import es.atrujillo.mjml.config.template.TemplateType
 import es.atrujillo.mjml.model.mjml.MjmlRequest
 import es.atrujillo.mjml.model.mjml.MjmlResponse
 import es.atrujillo.mjml.rest.BasicAuthRestClient
@@ -15,6 +17,7 @@ import java.util.*
 class MjmlRestService(private val authConf: MjmlAuthConf) : MjmlService {
 
     override fun transpileMjmlToHtml(mjmlBody: String): String {
+
         val restClient = BasicAuthRestClient<MjmlRequest>(authConf.getMjmlApiEndpoint().toString(),
                 authConf.getMjmlApplicationId(), authConf.getMjmlApplicationSecretKey())
 

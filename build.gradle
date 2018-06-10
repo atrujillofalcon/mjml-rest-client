@@ -2,6 +2,7 @@ buildscript {
     ext.kotlin_version = '1.2.41'
     ext.spring_version = '5.0.6.RELEASE'
     ext.jackson_version = '2.9.5'
+    ext.thymeleaf_version = '3.0.9.RELEASE'
 
     repositories {
         jcenter()
@@ -43,10 +44,14 @@ dependencies {
     compile "org.apache.httpcomponents:httpclient:4.5.5"
     compile "javax.validation:validation-api:2.0.1.Final"
 
+    //Template with thymeleaf
+    compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
+
     compile "org.slf4j:slf4j-api:1.7.25"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    testCompile 'org.mockito:mockito-android:2.18.3'
     testCompile "org.springframework:spring-test:5.0.6.RELEASE"
 
 }

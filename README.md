@@ -19,24 +19,70 @@
 To include this library into your project your only need to add the dependency.
 
 **Maven**:
-```
+```xml
 <dependency>
     <groupId>es.atrujillo.mjml</groupId>
     <artifactId>mjml-rest-client</artifactId>
-    <version>1.2.2</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
 **Gradle**:
-```
-compile "es.atrujillo.mjml:mjml-rest-client:1.2.2"
+```groovy
+compile "es.atrujillo.mjml:mjml-rest-client:1.3.0"
 ```
 
 ## Usage
 
-Import the library into your project. Configure the MjmlApi credentials for your project and instantiate a MjmlService object
 
-```
+### Creating templates
+
+This library includes Thymleaf engine to allow to create dynamic templates before to send to Mjml API.
+
+We have two options for templating mjml mails. In-memory String or File.
+
+#### File templates
+
+Lets see how create the template from a file source
+
+```java
+File fileTemplate = new File("/path/to/mjml/template.xml");
+Context contextVars = new Context();
+contextVars.setVariable("message","Hello MJML");
+       
+String mjmlTemplate = TemplateFactory.builder()
+               .type(TemplateType.FILE)
+               .template(fileTemplate)
+               .templateContext(contextVars)
+               .buildTemplate();                
+ ```
+#### In-Memory String templates
+
+```java
+private static final String DUMMY_TEMPLATE = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text th:text=\"${message}\"></mj-text></mj-column></mj-section></mj-container></mj-body></mjml>";
+...
+...
+...
+Context contextVars = new Context();
+contextVars.setVariable("message","Hello MJML");
+
+String mjmlTemplate = TemplateFactory.builder()
+                .type(TemplateType.STRING)
+                .template(DUMMY_TEMPLATE)
+                .templateContext(contextVars)
+                .buildTemplate();              
+ ```
+
+### Obtaining final HTML
+
+We already have the template, but before to call to API we need the API credentials to initialize our service client.
+
+You can obtain the credentials [**here**](https://mjml.io/api).
+
+Finally, we just need to instantiate our client with the credentials obtained
+ and use it to convert the template into the final HTML to send it to whoever we want.
+
+```java
 MjmlAuthConf authConf = new MemoryMjmlAuthConf(applicationId, secretKey);
 MjmlService mjmlService = new MjmlRestService(authConf);
 
@@ -51,7 +97,7 @@ First you have to set **MJML_APP_ID** and **MJML_SECRET_KEY** environment variab
 
 Execute from root folder:
 
-```
+```groovy
 gradle test
 ```
 
