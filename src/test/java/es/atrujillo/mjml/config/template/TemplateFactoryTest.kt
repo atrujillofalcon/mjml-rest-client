@@ -1,7 +1,5 @@
-package es.atrujillo.test.unitary.config.template
+package es.atrujillo.mjml.config.template
 
-import es.atrujillo.mjml.config.template.TemplateFactory
-import es.atrujillo.mjml.config.template.TemplateType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package es.atrujillo.test.integration.service;
+package es.atrujillo.mjml.integration.service;
 
 import es.atrujillo.mjml.config.template.TemplateFactory;
 import es.atrujillo.mjml.config.template.TemplateType;
