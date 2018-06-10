@@ -8,3 +8,5 @@
 **/build_gradle
 .gradle
 .idea
+
+**/out
