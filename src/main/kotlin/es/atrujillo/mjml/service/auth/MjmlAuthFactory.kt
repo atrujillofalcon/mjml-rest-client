@@ -6,9 +6,9 @@ import java.util.*
 class MjmlAuthFactory {
 
     interface ChooseTypeStep {
-        fun whitEnviromentCredentials(): EnvAuthStep
-        fun whitMemoryCredentials(): MemoryAuthStep
-        fun whitPropertiesCredential(): PropertiesAuthStep
+        fun withEnvironmentCredentials(): EnvAuthStep
+        fun withMemoryCredentials(): MemoryAuthStep
+        fun withPropertiesCredential(): PropertiesAuthStep
     }
 
     interface MemoryAuthStep {
@@ -48,17 +48,17 @@ class MjmlAuthFactory {
             private var endpoint: URI = URI.create("https://api.mjml.io/v1")
             private var properties: Properties? = null
 
-            override fun whitEnviromentCredentials(): EnvAuthStep {
+            override fun withEnvironmentCredentials(): EnvAuthStep {
                 authType = AuthType.ENV
                 return this
             }
 
-            override fun whitMemoryCredentials(): MemoryAuthStep {
+            override fun withMemoryCredentials(): MemoryAuthStep {
                 authType = AuthType.MEMORY
                 return this
             }
 
-            override fun whitPropertiesCredential(): PropertiesAuthStep {
+            override fun withPropertiesCredential(): PropertiesAuthStep {
                 authType = AuthType.PROPERTIES
                 return this
             }

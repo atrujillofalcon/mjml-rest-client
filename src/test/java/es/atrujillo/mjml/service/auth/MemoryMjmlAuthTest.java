@@ -19,7 +19,7 @@ class MemoryMjmlAuthTest {
         appID = UUID.randomUUID().toString();
         secretKey = UUID.randomUUID().toString();
         mjmlAuth = MjmlAuthFactory.builder()
-                .whitMemoryCredentials()
+                .withMemoryCredentials()
                 .mjmlCredentials(appID, secretKey)
                 .build();
 
@@ -33,7 +33,7 @@ class MemoryMjmlAuthTest {
         URI mockURI = Mockito.mock(URI.class);
         Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
         mjmlAuth = MjmlAuthFactory.builder()
-                .whitMemoryCredentials()
+                .withMemoryCredentials()
                 .mjmlCredentials(appID, secretKey)
                 .changeEndpoint(mockURI)
                 .build();
@@ -46,25 +46,25 @@ class MemoryMjmlAuthTest {
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             mjmlAuth = MjmlAuthFactory.builder()
-                    .whitMemoryCredentials()
+                    .withMemoryCredentials()
                     .mjmlCredentials(null, null)
                     .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             mjmlAuth = MjmlAuthFactory.builder()
-                    .whitMemoryCredentials()
+                    .withMemoryCredentials()
                     .mjmlCredentials(UUID.randomUUID().toString(), null)
                     .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             mjmlAuth = MjmlAuthFactory.builder()
-                    .whitMemoryCredentials()
+                    .withMemoryCredentials()
                     .mjmlCredentials(null, UUID.randomUUID().toString())
                     .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuthFactory.builder()
-                    .whitMemoryCredentials()
+                    .withMemoryCredentials()
                     .mjmlCredentials(UUID.randomUUID().toString(), UUID.randomUUID().toString())
                     .changeEndpoint(null)
                     .build();

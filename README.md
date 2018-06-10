@@ -24,13 +24,13 @@ To include this library into your project your only need to add the dependency.
 <dependency>
     <groupId>es.atrujillo.mjml</groupId>
     <artifactId>mjml-rest-client</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 
 **Gradle**:
 ```groovy
-compile "es.atrujillo.mjml:mjml-rest-client:1.3.0"
+compile "es.atrujillo.mjml:mjml-rest-client:1.4.0"
 ```
 
 ## Usage
@@ -74,11 +74,37 @@ String mjmlTemplate = TemplateFactory.builder()
                 .buildTemplate();              
  ```
 
-### Obtaining final HTML
+### API Credentials
 
 We already have the template, but before to call to API we need the API credentials to initialize our service client.
 
 You can obtain the credentials [**here**](https://mjml.io/api).
+
+Before calling our service we have to create an instance of MjmlAuth through the MjmlAuthFactory class.
+ We have three options:
+ 
+```java
+//Get credentials from environments variables
+MjmlAuth systemEnvAuthConf = MjmlAuthFactory.builder()
+                .withEnvironmentCredentials()
+                .mjmlKeyNames(MJML_APP_ID, MJML_SECRET_KEY)
+                .build();
+
+//Enter in-memory string credentials directly into auth factory
+MjmlAuth memoryAuthConf = MjmlAuthFactory.builder()
+                .withMemoryCredentials()
+                .mjmlCredentials(mjmlAppId, mjmlSecretKey)
+                .build();
+
+//Get credentials from properties file
+MjmlAuth propertyAuthConf = MjmlAuthFactory.builder()
+                .withPropertiesCredential()
+                .properties(propertiesFile)
+                .mjmlKeyNames(appPropKey, secretPropKey)
+                .build();
+```
+
+### Obtaining final HTML
 
 Finally, we just need to instantiate our client with the credentials obtained
  and use it to convert the template into the final HTML to send it to whoever we want.

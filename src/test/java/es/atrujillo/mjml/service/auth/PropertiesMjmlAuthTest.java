@@ -37,7 +37,7 @@ class PropertiesMjmlAuthTest {
         Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
 
         mjmlAuth = MjmlAuthFactory.builder()
-                .whitPropertiesCredential()
+                .withPropertiesCredential()
                 .properties(properties)
                 .mjmlKeyNames(appIDPropKey, secretKeyPropKey)
                 .changeEndpoint(mockURI)
@@ -60,28 +60,28 @@ class PropertiesMjmlAuthTest {
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuthFactory.builder()
-                    .whitPropertiesCredential()
+                    .withPropertiesCredential()
                     .properties(properties)
                     .mjmlKeyNames(null, null)
                     .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuthFactory.builder()
-                    .whitPropertiesCredential()
+                    .withPropertiesCredential()
                     .properties(properties)
                     .mjmlKeyNames(UUID.randomUUID().toString(), null)
                     .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuthFactory.builder()
-                    .whitPropertiesCredential()
+                    .withPropertiesCredential()
                     .properties(properties)
                     .mjmlKeyNames(null, UUID.randomUUID().toString())
                     .build();
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuthFactory.builder()
-                    .whitPropertiesCredential()
+                    .withPropertiesCredential()
                     .properties(properties)
                     .mjmlKeyNames(UUID.randomUUID().toString(), UUID.randomUUID().toString())
                     .changeEndpoint(null)
@@ -89,7 +89,7 @@ class PropertiesMjmlAuthTest {
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuth testMjmlAuth = MjmlAuthFactory.builder()
-                    .whitPropertiesCredential()
+                    .withPropertiesCredential()
                     .properties(properties)
                     .mjmlKeyNames("invalid", secretKeyPropKey)
                     .build();
@@ -97,7 +97,7 @@ class PropertiesMjmlAuthTest {
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             MjmlAuth testMjmlAuth = MjmlAuthFactory.builder()
-                    .whitPropertiesCredential()
+                    .withPropertiesCredential()
                     .properties(properties)
                     .mjmlKeyNames(appIDPropKey,"invalid")
                     .build();

@@ -38,7 +38,7 @@ class MjmlRestServiceTest {
                 .buildTemplate();
 
         MjmlAuth authConf = MjmlAuthFactory.builder()
-                .whitEnviromentCredentials()
+                .withEnvironmentCredentials()
                 .mjmlKeyNames(MJML_APP_ID, MJML_SECRET_KEY)
                 .build();
 
