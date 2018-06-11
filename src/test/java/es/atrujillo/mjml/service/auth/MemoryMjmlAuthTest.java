@@ -1,6 +1,7 @@
 package es.atrujillo.mjml.service.auth;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,6 +16,7 @@ class MemoryMjmlAuthTest {
     private String secretKey;
 
     @Test
+    @DisplayName("Test Build Memory Auth")
     void testAuthInstance() {
         appID = UUID.randomUUID().toString();
         secretKey = UUID.randomUUID().toString();
@@ -43,6 +45,7 @@ class MemoryMjmlAuthTest {
     }
 
     @Test
+    @DisplayName("Test That Fail When Null values")
     void testAuthInstanceWithNullValues() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             mjmlAuth = MjmlAuthFactory.builder()

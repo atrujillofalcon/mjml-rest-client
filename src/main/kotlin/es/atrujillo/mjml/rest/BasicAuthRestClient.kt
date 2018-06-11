@@ -1,6 +1,8 @@
 package es.atrujillo.mjml.rest
 
 import es.atrujillo.mjml.config.http.basicauth.HttpComponentsClientHttpRequestFactoryBasicAuth
+import es.atrujillo.mjml.exception.InvalidMjmlApiUrl
+import es.atrujillo.mjml.util.RegexConstants
 import org.apache.http.HttpHost
 import org.springframework.http.client.support.BasicAuthorizationInterceptor
 import org.springframework.web.client.RestTemplate
@@ -21,6 +23,9 @@ internal class BasicAuthRestClient<R>(apiEndpoint: String, private val applicati
     }
 
     private fun configureRestTemplateWithBasicAuth(): RestTemplate {
+        if (!RegexConstants.URL_REGEX.matches(apiEndpoint))
+            throw InvalidMjmlApiUrl()
+
         val uriApiEndpoint = URI.create(apiEndpoint)
         val httpHost = HttpHost(uriApiEndpoint.host, uriApiEndpoint.port, uriApiEndpoint.scheme)
 
