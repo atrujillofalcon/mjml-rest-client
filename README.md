@@ -9,7 +9,7 @@
 ## Built With
 
 * [Kotlin](https://kotlinlang.org/) - The future of JVM languages
-* [Gradle](https://kotlinlang.org/) - Dependency Management
+* [Gradle](https://gradle.org/) - Dependency Management
 * [Spring Rest Template](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html) - Used to communicate with API
 * [Jackson](https://github.com/FasterXML/jackson-databind) - Best databind Java library
 * [Thymeleaf](https://www.thymeleaf.org/) - Template Engine
