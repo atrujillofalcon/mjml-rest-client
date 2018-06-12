@@ -14,7 +14,7 @@ class TemplateFactoryTest {
     @DisplayName("Test Build String Template")
     fun testBuildStringTemplate() {
         val template = TemplateFactory.builder()
-                .type(TemplateType.STRING)
+                .withStringTemplate()
                 .template(HELLO_WORLD_MJML)
                 .buildTemplate()
 
@@ -26,13 +26,14 @@ class TemplateFactoryTest {
     fun whenBuildStringTemplateWithoutSetTemplate() {
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             TemplateFactory.builder()
-                    .type(TemplateType.STRING)
+                    .withStringTemplate()
+                    .template("")
                     .buildTemplate()
         }
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             TemplateFactory.builder()
-                    .type(TemplateType.FILE)
-                    .template(HELLO_WORLD_MJML)
+                    .withFileTemplate()
+                    .template(File("/invalid/path/file"))
                     .buildTemplate()
         }
     }
@@ -46,20 +47,20 @@ class TemplateFactoryTest {
 
         val context = Context(Locale.getDefault())
         val messageVal = "Hello World"
-        context.setVariable("message",messageVal)
-        context.setVariable("number",1)
+        context.setVariable("message", messageVal)
+        context.setVariable("number", 1)
 
         val template = TemplateFactory.builder()
-                .type(TemplateType.FILE)
+                .withFileTemplate()
                 .template(fileTemplate)
                 .templateContext(context)
                 .buildTemplate()
 
         Assertions.assertNotNull(template)
-        Assertions.assertTrue(template.isNotEmpty(),"Templace can't be empty")
-        Assertions.assertTrue(template.contains(messageVal),"Template has to include message variable")
-        Assertions.assertTrue(template.contains("Positive Column"),"Template has to include positive column")
-        Assertions.assertFalse(template.contains("Negative Column"),"Template can't include negative column")
+        Assertions.assertTrue(template.isNotEmpty(), "Templace can't be empty")
+        Assertions.assertTrue(template.contains(messageVal), "Template has to include message variable")
+        Assertions.assertTrue(template.contains("Positive Column"), "Template has to include positive column")
+        Assertions.assertFalse(template.contains("Negative Column"), "Template can't include negative column")
     }
 
     @Test
@@ -69,7 +70,7 @@ class TemplateFactoryTest {
             val invalidFile = File("/invalid/path/template.xml")
 
             TemplateFactory.builder()
-                    .type(TemplateType.FILE)
+                    .withFileTemplate()
                     .template(invalidFile)
                     .buildTemplate()
         }

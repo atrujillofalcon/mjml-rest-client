@@ -68,7 +68,7 @@ Context contextVars = new Context();
 contextVars.setVariable("message","Hello MJML");
 
 String mjmlTemplate = TemplateFactory.builder()
-                .type(TemplateType.STRING)
+                .withStringTemplate()
                 .template(DUMMY_TEMPLATE)
                 .templateContext(contextVars)
                 .buildTemplate();              

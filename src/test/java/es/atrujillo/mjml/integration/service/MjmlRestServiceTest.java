@@ -1,7 +1,6 @@
 package es.atrujillo.mjml.integration.service;
 
 import es.atrujillo.mjml.config.template.TemplateFactory;
-import es.atrujillo.mjml.config.template.TemplateType;
 import es.atrujillo.mjml.service.auth.MjmlAuth;
 import es.atrujillo.mjml.service.auth.MjmlAuthFactory;
 import es.atrujillo.mjml.service.definition.MjmlService;
@@ -33,7 +32,7 @@ class MjmlRestServiceTest {
         assertNotNull(MJML_SECRET_KEY,"You have to configure environment variable MJML_SECRET_KEY");
 
         String template = TemplateFactory.builder()
-                .type(TemplateType.STRING)
+                .withStringTemplate()
                 .template(HELLO_WORLD_MJML)
                 .buildTemplate();
 

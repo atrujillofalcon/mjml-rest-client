@@ -8,11 +8,50 @@ import org.thymeleaf.templateresolver.FileTemplateResolver
 import org.thymeleaf.templateresolver.StringTemplateResolver
 import java.io.File
 
+/**
+ * Factory class that allow renderize Thymleaf template dinamically.
+ * The origin template can be a File or a String
+ * @see es.atrujillo.mjml.config.template.TemplateType
+ *
+ * This creational class use the Step Pattern.
+ *
+ *
+ * @author Arnaldo Trujillo
+ */
 class TemplateFactory private constructor(templateEngine: TemplateEngine) {
 
+    interface ChooseTypeStep {
 
-    interface TemplateTypeStep {
-        fun type(type: TemplateType): BuildStep
+        /**
+         * Choose File template mode.
+         * @return TemplateFileStep
+         */
+        fun withFileTemplate(): TemplateFileStep
+
+        /**
+         * Choose String template mode.
+         * @return TemplateStringStep
+         */
+        fun withStringTemplate(): TemplateStringStep
+    }
+
+    interface TemplateFileStep {
+
+        /**
+         * Set File template.
+         * Should be a valid existing File
+         */
+        fun template(fileTemplate: File): BuildStep
+    }
+
+    interface TemplateStringStep {
+
+        /**
+         * Set String template.
+         * Can't be empty nor null.
+         */
+        fun template(stringTemplate: String): BuildStep
+
     }
 
     interface BuildStep {
@@ -21,26 +60,30 @@ class TemplateFactory private constructor(templateEngine: TemplateEngine) {
 
         fun templateContext(templateContext: IContext): BuildStep
 
-        fun template(fileTemplate: File): BuildStep
-        fun template(stringTemplate: String): BuildStep
-
     }
 
     companion object {
 
+        /**
+         * Builder static method
+         */
         @JvmStatic
-        fun builder(): TemplateTypeStep = Builder()
+        fun builder(): ChooseTypeStep = Builder()
 
-        class Builder : TemplateTypeStep, BuildStep {
+        class Builder : ChooseTypeStep, TemplateStringStep, TemplateFileStep, BuildStep {
 
             private lateinit var templateType: TemplateType
             private var context: IContext = Context()
-            private var fileTemplate: File? = null
-            private var stringTemplate: String? = null
+            private lateinit var fileTemplate: File
+            private lateinit var stringTemplate: String
 
+            override fun withFileTemplate(): TemplateFileStep {
+                templateType = TemplateType.FILE
+                return this
+            }
 
-            override fun type(type: TemplateType): BuildStep {
-                this.templateType = type
+            override fun withStringTemplate(): TemplateStringStep {
+                templateType = TemplateType.STRING
                 return this
             }
 
@@ -49,21 +92,21 @@ class TemplateFactory private constructor(templateEngine: TemplateEngine) {
                 val template: String
                 val resolver = when (templateType) {
                     TemplateType.STRING -> {
-                        if (stringTemplate.isNullOrEmpty())
+                        if (stringTemplate.isEmpty())
                             throw IllegalArgumentException("Enter a valid String template")
 
-                        template = stringTemplate!!
+                        template = stringTemplate
                         val resolver = StringTemplateResolver()
                         resolver.templateMode = TemplateMode.XML
                         resolver
                     }
                     TemplateType.FILE -> {
-                        if (fileTemplate != null && fileTemplate!!.exists() && fileTemplate!!.isFile) {
+                        if (fileTemplate.exists() && fileTemplate.isFile) {
                             val resolver = FileTemplateResolver()
                             resolver.templateMode = TemplateMode.XML
-                            resolver.prefix = "${fileTemplate!!.parent}/"
-                            resolver.suffix = ".${fileTemplate!!.extension}"
-                            template = fileTemplate!!.nameWithoutExtension
+                            resolver.prefix = "${fileTemplate.parent}/"
+                            resolver.suffix = ".${fileTemplate.extension}"
+                            template = fileTemplate.nameWithoutExtension
 
                             resolver
                         } else {
