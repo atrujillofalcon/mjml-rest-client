@@ -11,7 +11,6 @@ import java.io.File
 /**
  * Factory class that allow renderize Thymleaf template dinamically.
  * The origin template can be a File or a String
- * @see es.atrujillo.mjml.config.template.TemplateType
  *
  * This creational class use the Step Pattern.
  *
@@ -151,4 +150,7 @@ class TemplateFactory private constructor(templateEngine: TemplateEngine) {
             }
         }
     }
+
+    private enum class TemplateType { STRING, FILE }
+
 }
