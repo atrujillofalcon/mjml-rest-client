@@ -24,13 +24,13 @@ To include this library into your project your only need to add the dependency.
 <dependency>
     <groupId>es.atrujillo.mjml</groupId>
     <artifactId>mjml-rest-client</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 </dependency>
 ```
 
 **Gradle**:
 ```groovy
-compile "es.atrujillo.mjml:mjml-rest-client:1.4.0"
+compile "es.atrujillo.mjml:mjml-rest-client:1.4.1"
 ```
 
 ## Usage

@@ -70,7 +70,7 @@ class MjmlAuthFactory {
             }
 
             override fun properties(properties: Properties): EnvAuthStep {
-                this.properties = properties;
+                this.properties = properties
                 return this
             }
 

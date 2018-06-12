@@ -6,11 +6,14 @@ import java.util.*
 /**
  * @author Arnaldo Trujillo
  */
-class PropertiesMjmlAuth private constructor(val properties: Properties, val mjmlAppIdKeyName: String, val mjmlSecretKeyName: String) : MjmlAuth {
+class PropertiesMjmlAuth private constructor(private val properties: Properties, private val mjmlAppIdKeyName: String,
+                                             private val mjmlSecretKeyName: String) : MjmlAuth {
 
     private var mjmlApiEndpoint: URI = URI.create("https://api.mjml.io/v1")
 
-    constructor(properties: Properties, mjmlAppIdKeyName: String, mjmlSecretKeyName: String, mjmlApiEndpoint: URI) : this(properties, mjmlAppIdKeyName, mjmlSecretKeyName) {
+    constructor(properties: Properties, mjmlAppIdKeyName: String, mjmlSecretKeyName: String, mjmlApiEndpoint: URI)
+            : this(properties, mjmlAppIdKeyName, mjmlSecretKeyName) {
+
         this.mjmlApiEndpoint = mjmlApiEndpoint
     }
 

@@ -5,7 +5,8 @@ import java.net.URI
 /**
  * @author Arnaldo Trujillo
  */
-class SystemEnvironmentMjmlAuth private constructor(val mjmlAppIdKeyName: String, val mjmlSecretKeyName: String) : MjmlAuth {
+class SystemEnvironmentMjmlAuth private constructor(private val mjmlAppIdKeyName: String,
+                                                    private val mjmlSecretKeyName: String) : MjmlAuth {
 
     private var mjmlApiEndpoint: URI = URI.create("https://api.mjml.io/v1")
 

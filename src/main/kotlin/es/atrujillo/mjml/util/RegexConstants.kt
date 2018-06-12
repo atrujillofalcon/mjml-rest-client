@@ -1,6 +1,6 @@
 package es.atrujillo.mjml.util
 
-class RegexConstants {
+internal class RegexConstants {
 
     companion object {
 
