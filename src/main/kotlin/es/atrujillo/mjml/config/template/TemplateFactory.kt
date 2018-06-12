@@ -20,6 +20,9 @@ import java.io.File
  */
 class TemplateFactory private constructor(templateEngine: TemplateEngine) {
 
+    /**
+     * Initial build step
+     */
     interface ChooseTypeStep {
 
         /**
@@ -35,29 +38,42 @@ class TemplateFactory private constructor(templateEngine: TemplateEngine) {
         fun withStringTemplate(): TemplateStringStep
     }
 
+    /**
+     * Set File template step.
+     */
     interface TemplateFileStep {
 
         /**
-         * Set File template.
          * Should be a valid existing File
          */
         fun template(fileTemplate: File): BuildStep
     }
 
+    /**
+     * Set String template step
+     */
     interface TemplateStringStep {
 
         /**
-         * Set String template.
          * Can't be empty nor null.
          */
         fun template(stringTemplate: String): BuildStep
 
     }
 
+    /**
+     * Final build step
+     */
     interface BuildStep {
 
+        /**
+         * Return the final renderized template
+         */
         fun buildTemplate(): String
 
+        /**
+         * Set context variables to process in template
+         */
         fun templateContext(templateContext: IContext): BuildStep
 
     }
