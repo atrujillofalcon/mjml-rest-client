@@ -1,6 +1,9 @@
 # Mjml Rest Client
 
 [![CircleCI](https://circleci.com/gh/atrujillofalcon/mjml-rest-client.svg?style=svg)](https://circleci.com/gh/atrujillofalcon/mjml-rest-client)
+[![codecov](https://codecov.io/gh/atrujillofalcon/mjml-rest-client/branch/develop/graph/badge.svg)](https://codecov.io/gh/atrujillofalcon/mjml-rest-client)
+
+
 
 [Mjml](https://mjml.io/) is the best responsive mail framework, I love it :heart:. I created this project to have a Java library that use the
 **mjml API** to convert a mjml template into valid html ready to use.
