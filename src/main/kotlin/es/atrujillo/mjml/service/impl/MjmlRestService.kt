@@ -1,14 +1,18 @@
 package es.atrujillo.mjml.service.impl
 
+import com.fasterxml.jackson.module.kotlin.readValue
+import es.atrujillo.mjml.exception.MjmlApiErrorException
+import es.atrujillo.mjml.model.mjml.MjmlApiError
 import es.atrujillo.mjml.model.mjml.MjmlRequest
 import es.atrujillo.mjml.model.mjml.MjmlResponse
 import es.atrujillo.mjml.rest.BasicAuthRestClient
 import es.atrujillo.mjml.service.auth.MjmlAuth
 import es.atrujillo.mjml.service.definition.MjmlService
 import es.atrujillo.mjml.util.StringConstants
+import es.atrujillo.mjml.util.logError
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.ResponseEntity
-import java.util.*
+import org.springframework.web.client.HttpStatusCodeException
 
 /**
  * Service implementation to convert a MJML template to HTML through the API.
@@ -26,14 +30,26 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
 
         val request = MjmlRequest(mjmlBody)
 
-        val responseEntity = restClient.post(request, TRANSPILE_RENDER_MJML_PATH, object : ParameterizedTypeReference<MjmlResponse>() {})
+        try {
+            val responseEntity = restClient.post(request, TRANSPILE_RENDER_MJML_PATH, object : ParameterizedTypeReference<MjmlResponse>() {})
+            if (responseEntity.statusCode.is2xxSuccessful) {
+                return responseEntity
+                        .let { response: ResponseEntity<MjmlResponse> -> response.body }
+                        ?.let { body -> body.html } ?: StringConstants.EMPTY
+            }
 
-        return Optional.ofNullable(responseEntity)
-                .filter { mjmlResponseEntity -> mjmlResponseEntity.statusCode.is2xxSuccessful }
-                .map { response: ResponseEntity<MjmlResponse> -> response.body }
-                .filter { body -> body != null }
-                .map { body -> body.html }
-                .orElse(StringConstants.EMPTY)
+            //TODO revisar esta conversión
+            val mjmlApiError = (responseEntity as ResponseEntity<MjmlApiError>)
+                    .let { response: ResponseEntity<MjmlApiError> -> response.body }
+
+            throw MjmlApiErrorException(mjmlApiError, responseEntity.statusCode)
+
+        } catch (httpError: HttpStatusCodeException) {
+            logError(httpError.localizedMessage, httpError)
+            val mjmlApiError = restClient.getObjectMapper().readValue<MjmlApiError>(httpError.responseBodyAsString)
+//            val mjmlApiError = MjmlApiError(httpError.responseBodyAsString, "", LocalDate.now())
+            throw MjmlApiErrorException(mjmlApiError, httpError.statusCode)
+        }
     }
 
     companion object {

@@ -1,6 +1,6 @@
 package es.atrujillo.mjml.rest
 
-import es.atrujillo.mjml.exception.InvalidMjmlApiUrl
+import es.atrujillo.mjml.exception.InvalidMjmlApiUrlException
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -31,7 +31,7 @@ class BasicAuthRestClientTest {
     @Test
     @DisplayName("When Invalid URL throw InvalidMjmlApiUrl Exception")
     fun testInitializationWithInvalidUrl() {
-        assertThrows<InvalidMjmlApiUrl> {
+        assertThrows<InvalidMjmlApiUrlException> {
             restClient = BasicAuthRestClient("invalid_url", "appID", "secretKey")
         }
     }
