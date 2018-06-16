@@ -1,6 +1,5 @@
 package es.atrujillo.mjml.service.impl
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import es.atrujillo.mjml.exception.MjmlApiErrorException
 import es.atrujillo.mjml.model.mjml.MjmlApiError
 import es.atrujillo.mjml.model.mjml.MjmlRequest
@@ -38,16 +37,12 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
                         ?.let { body -> body.html } ?: StringConstants.EMPTY
             }
 
-            //TODO revisar esta conversión
-            val mjmlApiError = (responseEntity as ResponseEntity<MjmlApiError>)
-                    .let { response: ResponseEntity<MjmlApiError> -> response.body }
-
-            throw MjmlApiErrorException(mjmlApiError, responseEntity.statusCode)
+            throw MjmlApiErrorException(MjmlApiError(responseEntity.statusCode.reasonPhrase), responseEntity.statusCode)
 
         } catch (httpError: HttpStatusCodeException) {
             logError(httpError.localizedMessage, httpError)
-            val mjmlApiError = restClient.getObjectMapper().readValue<MjmlApiError>(httpError.responseBodyAsString)
-//            val mjmlApiError = MjmlApiError(httpError.responseBodyAsString, "", LocalDate.now())
+//          val mjmlApiError = restClient.getObjectMapper().readValue<MjmlApiError>(httpError.responseBodyAsString)
+            val mjmlApiError = MjmlApiError(httpError.responseBodyAsString)
             throw MjmlApiErrorException(mjmlApiError, httpError.statusCode)
         }
     }
