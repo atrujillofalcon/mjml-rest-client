@@ -1,7 +1,11 @@
+import net.researchgate.release.GitAdapter
+
 buildscript {
-    ext.kotlin_version = '1.2.41'
-    ext.spring_version = '5.0.6.RELEASE'
-    ext.jackson_version = '2.9.5'
+    ext.kotlin_version = '1.2.50'
+    ext.spring_version = '5.0.7.RELEASE'
+    ext.jackson_version = '2.9.6'
+    ext.thymeleaf_version = '3.0.9.RELEASE'
+    ext.junit5_version = '5.2.0'
 
     repositories {
         jcenter()
@@ -13,7 +17,7 @@ buildscript {
 
 plugins {
     id 'net.researchgate.release' version '2.6.0'
-    id "com.jfrog.bintray" version "1.7.3"
+    id "com.jfrog.bintray" version "1.8.1"
 }
 
 group 'es.atrujillo.mjml'
@@ -24,6 +28,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 
@@ -43,12 +48,29 @@ dependencies {
     compile "org.apache.httpcomponents:httpclient:4.5.5"
     compile "javax.validation:validation-api:2.0.1.Final"
 
+    //Template with thymeleaf
+    compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
+
     compile "org.slf4j:slf4j-api:1.7.25"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile "org.springframework:spring-test:5.0.6.RELEASE"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
+//    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
+    testCompile "org.mockito:mockito-core:2.19.0"
+    testCompile "org.springframework:spring-test:$spring_version"
+    testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.6'
 
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }
 
 compileKotlin {
@@ -127,7 +149,7 @@ release {
     tagTemplate = '${version}'
     versionPropertyFile = 'gradle.properties'
     scmAdapters = [
-            net.researchgate.release.GitAdapter,
+            GitAdapter,
     ]
 
     git {

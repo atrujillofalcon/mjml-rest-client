@@ -1,12 +1,11 @@
-package es.atrujillo.mjml.service.impl
+package es.atrujillo.mjml.service.auth
 
-import es.atrujillo.mjml.service.definition.MjmlAuthConf
 import java.net.URI
 
 /**
  * @author Arnaldo Trujillo
  */
-class MemoryMjmlAuthConf(val mjmlAppId: String, val mjmlSecretKey: String) : MjmlAuthConf {
+class MemoryMjmlAuth private constructor(private val mjmlAppId: String, private val mjmlSecretKey: String) : MjmlAuth {
 
     private var mjmlApiEndpoint: URI = URI.create("https://api.mjml.io/v1")
 
