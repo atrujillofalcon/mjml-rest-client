@@ -5,11 +5,16 @@ import es.atrujillo.mjml.model.mjml.MjmlResponse
 import es.atrujillo.mjml.rest.BasicAuthRestClient
 import es.atrujillo.mjml.service.auth.MjmlAuth
 import es.atrujillo.mjml.service.definition.MjmlService
+import es.atrujillo.mjml.util.StringConstants
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.ResponseEntity
 import java.util.*
 
 /**
+ * Service implementation to convert a MJML template to HTML through the API.
+ * To instantiate this service we need a MjmlAuth instance.
+ * @see MjmlAuth
+ *
  * @author Arnaldo Trujillo
  */
 class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
@@ -21,11 +26,14 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
 
         val request = MjmlRequest(mjmlBody)
 
-        return Optional.of(restClient.post(request, TRANSPILE_RENDER_MJML_PATH, object : ParameterizedTypeReference<MjmlResponse>() {}, null, null))
+        val responseEntity = restClient.post(request, TRANSPILE_RENDER_MJML_PATH, object : ParameterizedTypeReference<MjmlResponse>() {})
+
+        return Optional.ofNullable(responseEntity)
                 .filter { mjmlResponseEntity -> mjmlResponseEntity.statusCode.is2xxSuccessful }
-                .map { response: ResponseEntity<MjmlResponse>? -> response!!.body }
+                .map { response: ResponseEntity<MjmlResponse> -> response.body }
+                .filter { body -> body != null }
                 .map { body -> body.html }
-                .orElse("")
+                .orElse(StringConstants.EMPTY)
     }
 
     companion object {

@@ -20,7 +20,8 @@ internal interface RestClient<R> {
      * @param params URL query params (Optional)
      * @param headers HTTP header (Optional)
      */
-    operator fun <T> get(path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>?, headers: HttpHeaders?): ResponseEntity<T>
+    operator fun <T> get(path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>? = null,
+                         headers: HttpHeaders? = null): ResponseEntity<T>
 
     /**
      * POST HTTP method abstraction
@@ -31,7 +32,8 @@ internal interface RestClient<R> {
      * @param params URL query params (Optional)
      * @param headers HTTP header (Optional)
      */
-    fun <T> post(request: R, path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>?, headers: HttpHeaders?): ResponseEntity<T>
+    fun <T> post(request: R, path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>? = null,
+                 headers: HttpHeaders? = null): ResponseEntity<T>
 
     /**
      * PATCH HTTP method abstraction
@@ -42,6 +44,7 @@ internal interface RestClient<R> {
      * @param params URL query params (Optional)
      * @param headers HTTP header (Optional)
      */
-    fun <T> patch(request: R, path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>?, headers: HttpHeaders?): ResponseEntity<T>
+    fun <T> patch(request: R, path: String, type: ParameterizedTypeReference<T>, params: MultiValueMap<String, String>? = null,
+                  headers: HttpHeaders? = null): ResponseEntity<T>
 
 }
