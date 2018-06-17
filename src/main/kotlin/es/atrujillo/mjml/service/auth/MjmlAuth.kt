@@ -9,10 +9,19 @@ import java.net.URI
  */
 interface MjmlAuth {
 
+    /**
+     * Returns mjml api applicationId
+     */
     fun getMjmlApplicationId(): String
 
+    /**
+     * Returns mjml api secret key token
+     */
     fun getMjmlApplicationSecretKey(): String
 
+    /**
+     * Return API url
+     */
     fun getMjmlApiEndpoint(): URI
 
 }

@@ -19,6 +19,7 @@ import org.springframework.web.client.HttpStatusCodeException
  * To instantiate this service we need a MjmlAuth instance.
  * @see MjmlAuth
  *
+ * @throws es.atrujillo.mjml.exception.MjmlApiErrorException
  * @author Arnaldo Trujillo
  */
 class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {

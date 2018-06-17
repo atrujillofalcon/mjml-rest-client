@@ -3,11 +3,46 @@ package es.atrujillo.mjml.service.auth
 import java.net.URI
 import java.util.*
 
+/**
+ * Factory class that returns a instance of MjmlAuth.
+ * This factory implements the Step Pattern that allows us to create
+ * all types subclasses of MjmlAuth in an orderly and clear manner.
+ *
+ * MjmlAuth types can be:
+ * @see SystemEnvironmentMjmlAuth
+ * @see PropertiesMjmlAuth
+ * @see MemoryMjmlAuth
+ *
+ * @example
+ *
+ *  MjmlAuth propertyAuthConf = MjmlAuthFactory.builder()
+ *                              .withPropertiesCredential()
+ *                              .properties(propertiesFile)
+ *                              .mjmlKeyNames(appPropKey, secretPropKey)
+ *                              .build();
+ *
+ * @return MjmlAuth
+ * @author Arnaldo Trujillo
+ */
 class MjmlAuthFactory {
 
     interface ChooseTypeStep {
+        /**
+         * First step to configure a {@link SystemEnvironmentMjmlAuth}
+         * @return Next environment auth step
+         */
         fun withEnvironmentCredentials(): EnvAuthStep
+
+        /**
+         * First step to configure a {@link MemoryMjmlAuth}
+         * @return Next in memory auth step
+         */
         fun withMemoryCredentials(): MemoryAuthStep
+
+        /**
+         * First step to configure a {@link PropertiesMjmlAuth}
+         * @return Next file properties auth step
+         */
         fun withPropertiesCredential(): PropertiesAuthStep
     }
 
@@ -24,17 +59,25 @@ class MjmlAuthFactory {
     }
 
     interface BuildStep {
-
+        /**
+         * Return the MjmlAuth instance when configuration is finished
+         */
         fun build(): MjmlAuth
 
+        /**
+         * Change the default MJML Api endpoint
+         */
         fun changeEndpoint(endpoint: URI): BuildStep
-
     }
 
     companion object {
 
         private enum class AuthType { MEMORY, PROPERTIES, ENV }
 
+        /**
+         * Init method to create the MjmlAuth instance
+         * @return Builder
+         */
         @JvmStatic
         fun builder(): ChooseTypeStep = Builder()
 
