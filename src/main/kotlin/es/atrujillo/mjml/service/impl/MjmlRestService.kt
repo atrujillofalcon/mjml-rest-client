@@ -1,5 +1,6 @@
 package es.atrujillo.mjml.service.impl
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import es.atrujillo.mjml.exception.MjmlApiErrorException
 import es.atrujillo.mjml.model.mjml.MjmlApiError
 import es.atrujillo.mjml.model.mjml.MjmlRequest
@@ -18,6 +19,7 @@ import org.springframework.web.client.HttpStatusCodeException
  * To instantiate this service we need a MjmlAuth instance.
  * @see MjmlAuth
  *
+ * @throws es.atrujillo.mjml.exception.MjmlApiErrorException
  * @author Arnaldo Trujillo
  */
 class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
@@ -41,8 +43,7 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
 
         } catch (httpError: HttpStatusCodeException) {
             logError(httpError.localizedMessage, httpError)
-//          val mjmlApiError = restClient.getObjectMapper().readValue<MjmlApiError>(httpError.responseBodyAsString)
-            val mjmlApiError = MjmlApiError(httpError.responseBodyAsString)
+            val mjmlApiError = restClient.getObjectMapper().readValue<MjmlApiError>(httpError.responseBodyAsString)
             throw MjmlApiErrorException(mjmlApiError, httpError.statusCode)
         }
     }

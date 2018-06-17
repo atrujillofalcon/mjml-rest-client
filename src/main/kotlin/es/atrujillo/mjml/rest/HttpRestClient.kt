@@ -24,7 +24,7 @@ internal abstract class HttpRestClient<R> protected constructor(protected var ap
     lateinit var restTemplate: RestTemplate
 
     private fun <T> httpRequest(request: R?, path: String, httpMethod: HttpMethod, type: ParameterizedTypeReference<T>,
-                                params: MultiValueMap<String, String>?, headers: HttpHeaders?): ResponseEntity<T> {
+                                params: MultiValueMap<String, String>? = null, headers: HttpHeaders? = null): ResponseEntity<T> {
 
         LOG.debug(String.format("%s HttpRequest to %s", httpMethod.toString(), apiEndpoint))
 
@@ -53,7 +53,9 @@ internal abstract class HttpRestClient<R> protected constructor(protected var ap
         return restTemplate.messageConverters.stream()
                 .filter { converter -> converter is MappingJackson2HttpMessageConverter }
                 .findFirst()
-                .map { jacksonConverter -> (jacksonConverter as MappingJackson2HttpMessageConverter).objectMapper }
+                .map { jacksonConverter ->
+                    (jacksonConverter as? MappingJackson2HttpMessageConverter)?.objectMapper ?: ObjectMapper()
+                }
                 .orElse(ObjectMapper())
     }
 

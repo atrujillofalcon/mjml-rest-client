@@ -51,7 +51,9 @@ dependencies {
     //Template with thymeleaf
     compile "org.thymeleaf:thymeleaf:$thymeleaf_version"
 
+    //Logging API
     compile "org.slf4j:slf4j-api:1.7.25"
+    testCompile 'org.slf4j:slf4j-simple:1.7.25'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
