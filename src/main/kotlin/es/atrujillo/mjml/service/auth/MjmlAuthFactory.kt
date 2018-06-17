@@ -24,7 +24,7 @@ import java.util.*
  * @return MjmlAuth
  * @author Arnaldo Trujillo
  */
-class MjmlAuthFactory {
+class MjmlAuthFactory private constructor(){
 
     interface ChooseTypeStep {
         /**
