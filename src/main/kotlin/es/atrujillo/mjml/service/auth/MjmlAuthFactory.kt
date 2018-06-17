@@ -41,12 +41,12 @@ class MjmlAuthFactory {
         class Builder : ChooseTypeStep, MemoryAuthStep, PropertiesAuthStep, EnvAuthStep, BuildStep {
 
             private lateinit var authType: AuthType
-            private var mjmlAppId: String? = null
-            private var mjmlSecretKey: String? = null
-            private var appIdKeyName: String? = null
-            private var secretKeyName: String? = null
+            private lateinit var mjmlAppId: String
+            private lateinit var mjmlSecretKey: String
+            private lateinit var appIdKeyName: String
+            private lateinit var secretKeyName: String
+            private lateinit var properties: Properties
             private var endpoint: URI = URI.create("https://api.mjml.io/v1")
-            private var properties: Properties? = null
 
             override fun withEnvironmentCredentials(): EnvAuthStep {
                 authType = AuthType.ENV
@@ -82,9 +82,9 @@ class MjmlAuthFactory {
 
             override fun build(): MjmlAuth {
                 return when (authType) {
-                    AuthType.MEMORY -> MemoryMjmlAuth(mjmlAppId!!, mjmlSecretKey!!, endpoint)
-                    AuthType.PROPERTIES -> PropertiesMjmlAuth(properties!!, appIdKeyName!!, secretKeyName!!, endpoint)
-                    AuthType.ENV -> SystemEnvironmentMjmlAuth(appIdKeyName!!, secretKeyName!!, endpoint)
+                    AuthType.MEMORY -> MemoryMjmlAuth(mjmlAppId, mjmlSecretKey, endpoint)
+                    AuthType.PROPERTIES -> PropertiesMjmlAuth(properties, appIdKeyName, secretKeyName, endpoint)
+                    AuthType.ENV -> SystemEnvironmentMjmlAuth(appIdKeyName, secretKeyName, endpoint)
                 }
             }
 
