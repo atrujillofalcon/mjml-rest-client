@@ -4,6 +4,7 @@ import es.atrujillo.mjml.config.template.TemplateFactory
 import es.atrujillo.mjml.exception.MjmlApiErrorException
 import es.atrujillo.mjml.service.auth.MjmlAuthFactory
 import es.atrujillo.mjml.service.impl.MjmlRestService
+import es.atrujillo.mjml.util.TestUtils.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -69,12 +70,6 @@ internal class MjmlRestServiceKtTest {
 
         Assertions.assertThrows(MjmlApiErrorException::class.java) { mjmlService.transpileMjmlToHtml(template) }
 
-    }
-
-    companion object {
-        private val HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>"
-        private val MJML_APP_ID = "MJML_APP_ID"
-        private val MJML_SECRET_KEY = "MJML_SECRET_KEY"
     }
 
 }
