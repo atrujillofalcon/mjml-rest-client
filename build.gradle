@@ -164,7 +164,6 @@ release {
 }
 
 afterReleaseBuild.dependsOn bintrayUpload
-preTagCommit.dependsOn replaceReadmeVersion
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
@@ -187,7 +186,7 @@ task replaceReadmeVersion(type: Jar){
     }
 }
 
-preTagCommit.dependsOn replaceReadmeVersion
+preTagCommit.doFirst replaceReadmeVersion
 
 artifacts {
     archives sourcesJar
