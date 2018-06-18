@@ -4,12 +4,14 @@ import es.atrujillo.mjml.config.template.TemplateFactory
 import es.atrujillo.mjml.exception.MjmlApiErrorException
 import es.atrujillo.mjml.service.auth.MjmlAuthFactory
 import es.atrujillo.mjml.service.impl.MjmlRestService
+import es.atrujillo.mjml.util.TestUtils.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.thymeleaf.exceptions.TemplateInputException
 import java.util.*
 
 /**
@@ -71,10 +73,45 @@ internal class MjmlRestServiceKtTest {
 
     }
 
-    companion object {
-        private val HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>"
-        private val MJML_APP_ID = "MJML_APP_ID"
-        private val MJML_SECRET_KEY = "MJML_SECRET_KEY"
+    /**
+     * Test that a malformed template return a Thymeleaf error
+     */
+    @Test
+    @DisplayName("Test Thymeleaf Error When Malformed Template")
+    fun testThatTemplateBuildingReturnErrorWithMalformedTemplate() {
+
+        Assertions.assertThrows(TemplateInputException::class.java) {
+            TemplateFactory.builder()
+                    .withStringTemplate()
+                    .template(MALFORMED_TEMPLATE)
+                    .buildTemplate()
+        }
+    }
+
+    /**
+     * Test that invalid mjml template return errors
+     */
+    @Test
+    @DisplayName("Test Error Handling with Invalid Template")
+    fun testThatApiReturnErrorWithInvalidTemplate() {
+
+        assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
+        assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")
+
+        val invalidTemplate = TemplateFactory.builder()
+                .withStringTemplate()
+                .template(INVALID_TEMPLATE)
+                .buildTemplate()
+
+        val authConf = MjmlAuthFactory.builder()
+                .withEnvironmentCredentials()
+                .mjmlKeyNames(MJML_APP_ID, MJML_SECRET_KEY)
+                .build()
+
+        val mjmlService = MjmlRestService(authConf)
+
+        Assertions.assertThrows(MjmlApiErrorException::class.java) { mjmlService.transpileMjmlToHtml(invalidTemplate) }
+
     }
 
 }
