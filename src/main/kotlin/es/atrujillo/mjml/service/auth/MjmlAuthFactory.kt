@@ -24,9 +24,13 @@ import java.util.*
  * @return MjmlAuth
  * @author Arnaldo Trujillo
  */
-class MjmlAuthFactory private constructor(){
+class MjmlAuthFactory private constructor() {
 
+    /**
+     * Initial build step
+     */
     interface ChooseTypeStep {
+
         /**
          * First step to configure a {@link SystemEnvironmentMjmlAuth}
          * @return Next environment auth step
@@ -46,18 +50,47 @@ class MjmlAuthFactory private constructor(){
         fun withPropertiesCredential(): PropertiesAuthStep
     }
 
+    /**
+     * Step where we have to set mjml credentials directly in memory
+     */
     interface MemoryAuthStep {
+
+        /**
+         * Set mjml credentials in memory
+         * @param mjmlAppId Mjml Api applicationId
+         * @param mjmlSecretKey Mjml Api secret key
+         */
         fun mjmlCredentials(mjmlAppId: String, mjmlSecretKey: String): BuildStep
     }
 
+    /**
+     * Step where we have to set the properties files where
+     * framework going to find mjml api credentials
+     *
+     * @see Properties
+     */
     interface PropertiesAuthStep {
+
+        /**
+         * Set properties file where search mjml credentials         *
+         */
         fun properties(properties: Properties): EnvAuthStep
     }
 
+    /**
+     * Step where we have to set the key names to obtains credentials from System environments.
+     * Apply too to properties file.
+     */
     interface EnvAuthStep {
+        /**
+         * Set credentials key names
+         */
         fun mjmlKeyNames(mjmlAppIdKeyName: String, mjmlSecretKeyName: String): BuildStep
     }
 
+    /**
+     * Final step to get the {@link MjmlAuth} instance
+     */
     interface BuildStep {
         /**
          * Return the MjmlAuth instance when configuration is finished

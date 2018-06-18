@@ -35,7 +35,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Integration API test")
-    fun testThatMjmlApiRespondCorrectly() {
+    internal fun testThatMjmlApiRespondCorrectly() {
 
         assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
         assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")
@@ -57,7 +57,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Test Error Handling with Invalid Credentials")
-    fun testThatApiReturnErrorWithoutValidCredentials() {
+    internal fun testThatApiReturnErrorWithoutValidCredentials() {
 
         val invalidAppId = UUID.randomUUID().toString()
         val invalidSecretKey = UUID.randomUUID().toString()
@@ -78,7 +78,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Test Thymeleaf Error When Malformed Template")
-    fun testThatTemplateBuildingReturnErrorWithMalformedTemplate() {
+    internal fun testThatTemplateBuildingReturnErrorWithMalformedTemplate() {
 
         Assertions.assertThrows(TemplateInputException::class.java) {
             TemplateFactory.builder()
@@ -93,7 +93,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Test Error Handling with Invalid Template")
-    fun testThatApiReturnErrorWithInvalidTemplate() {
+    internal fun testThatApiReturnErrorWithInvalidTemplate() {
 
         assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
         assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")

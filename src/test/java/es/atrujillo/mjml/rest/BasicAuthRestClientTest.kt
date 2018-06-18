@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.http.client.support.BasicAuthorizationInterceptor
 
-class BasicAuthRestClientTest {
+internal class BasicAuthRestClientTest {
 
     private lateinit var restClient: BasicAuthRestClient<String>
 
     @BeforeEach
-    fun initialize() {
+    internal fun initialize() {
         restClient = BasicAuthRestClient("https://api.mjml.io/v1", "appID", "secretKey")
     }
 
     @Test
     @DisplayName("Test RestTemplate Initialization")
-    fun testRestTemplateInitialization() {
+    internal fun testRestTemplateInitialization() {
         assertNotNull(restClient)
         assertNotNull(restClient.restTemplate)
         assertNotNull(restClient.restTemplate.requestFactory)
@@ -30,7 +30,7 @@ class BasicAuthRestClientTest {
 
     @Test
     @DisplayName("When Invalid URL throw InvalidMjmlApiUrl Exception")
-    fun testInitializationWithInvalidUrl() {
+    internal fun testInitializationWithInvalidUrl() {
         assertThrows<InvalidMjmlApiUrlException> {
             restClient = BasicAuthRestClient("invalid_url", "appID", "secretKey")
         }
