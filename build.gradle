@@ -164,6 +164,7 @@ release {
 }
 
 afterReleaseBuild.dependsOn bintrayUpload
+preTagCommit.dependsOn replaceReadmeVersion
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
@@ -173,6 +174,17 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
+}
+
+task replaceReadmeVersion << {
+    // Maven
+    ant.replaceregexp(match:'<version>(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?<\\/version>', replace:"<version>${version}</version>", flags:'g', byline:true) {
+        fileset(dir: '.', includes: 'README.md')
+    }
+    // Gradle
+    ant.replaceregexp(match:'es\\.atrujillo\\.mjml\\:mjml-rest-client\\:(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?', replace:"es.atrujillo.mjml:mjml-rest-client:${version}", flags:'g', byline:true) {
+        fileset(dir: '.', includes: 'README.md')
+    }
 }
 
 artifacts {
