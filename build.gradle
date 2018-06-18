@@ -175,19 +175,16 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-task replaceReadmeVersion(type: Jar){
-// Maven
-    ant.replaceregexp(match:'<version>(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?<\\/version>', replace:"<version>${version}</version>", flags:'g', byline:true) {
+
+preTagCommit.doFirst {
+    // Maven
+    ant.replaceregexp(match: '<version>(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?<\\/version>', replace: "<version>${version}</version>", flags: 'g', byline: true) {
         fileset(dir: '.', includes: 'README.md')
     }
     // Gradle
-    ant.replaceregexp(match:'es\\.atrujillo\\.mjml\\:mjml-rest-client\\:(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?', replace:"es.atrujillo.mjml:mjml-rest-client:${version}", flags:'g', byline:true) {
+    ant.replaceregexp(match: 'es\\.atrujillo\\.mjml\\:mjml-rest-client\\:(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?', replace: "es.atrujillo.mjml:mjml-rest-client:${version}", flags: 'g', byline: true) {
         fileset(dir: '.', includes: 'README.md')
     }
-}
-
-preTagCommit.doFirst {
-    replaceReadmeVersion
 }
 
 artifacts {
