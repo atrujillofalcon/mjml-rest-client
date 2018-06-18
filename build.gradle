@@ -186,7 +186,9 @@ task replaceReadmeVersion(type: Jar){
     }
 }
 
-preTagCommit.doFirst replaceReadmeVersion
+preTagCommit.doFirst {
+    replaceReadmeVersion
+}
 
 artifacts {
     archives sourcesJar
