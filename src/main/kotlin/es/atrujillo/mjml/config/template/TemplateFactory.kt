@@ -1,5 +1,6 @@
 package es.atrujillo.mjml.config.template
 
+import es.atrujillo.mjml.util.logDebug
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
 import org.thymeleaf.context.IContext
@@ -131,7 +132,10 @@ class TemplateFactory private constructor(templateEngine: TemplateEngine) {
                 }
 
                 engine.setTemplateResolver(resolver)
-                return engine.process(template, context)
+                val finalTemplate = engine.process(template, context)
+
+                logDebug("Final template: \n $finalTemplate")
+                return finalTemplate
             }
 
             override fun templateContext(templateContext: IContext): BuildStep {

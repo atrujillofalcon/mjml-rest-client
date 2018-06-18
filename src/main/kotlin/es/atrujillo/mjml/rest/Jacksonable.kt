@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
  *
  * @author Arnaldo Trujillo
  */
-interface Jacksonable {
+internal interface Jacksonable {
 
     fun getObjectMapper(): ObjectMapper
 }

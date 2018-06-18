@@ -61,6 +61,7 @@ dependencies {
     testCompile "org.mockito:mockito-core:2.19.0"
     testCompile "org.springframework:spring-test:$spring_version"
     testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.6'
+    testCompile 'pl.pojo:pojo-tester:0.7.6'
 
 }
 
@@ -172,6 +173,18 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
+}
+
+
+preTagCommit.doFirst {
+    // Maven
+    ant.replaceregexp(match: '<version>(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?<\\/version>', replace: "<version>${version}</version>", flags: 'g', byline: true) {
+        fileset(dir: '.', includes: 'README.md')
+    }
+    // Gradle
+    ant.replaceregexp(match: 'es\\.atrujillo\\.mjml\\:mjml-rest-client\\:(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?', replace: "es.atrujillo.mjml:mjml-rest-client:${version}", flags: 'g', byline: true) {
+        fileset(dir: '.', includes: 'README.md')
+    }
 }
 
 artifacts {
