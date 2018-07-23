@@ -2,6 +2,7 @@ package es.atrujillo.mjml.service.impl
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import es.atrujillo.mjml.exception.MjmlApiErrorException
+import es.atrujillo.mjml.exception.MjmlApiUnsupportedVersionException
 import es.atrujillo.mjml.model.mjml.MjmlApiError
 import es.atrujillo.mjml.model.mjml.MjmlRequest
 import es.atrujillo.mjml.model.mjml.MjmlResponse
@@ -53,8 +54,7 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
 
     private fun validateMjmlVersion(requestBody: String, response: MjmlResponse) {
         if (requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.getMajorVersion() >= 4.0)
-            throw MjmlApiErrorException(MjmlApiError("Sended MJML template is invalid with current API version (${response.mjmlVersion}). " +
-                    "Please, use a valid ${response.mjmlVersion} supported template."), HttpStatus.BAD_REQUEST)
+            throw MjmlApiUnsupportedVersionException(response.mjmlVersion)
     }
 
     companion object {
