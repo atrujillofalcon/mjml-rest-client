@@ -6,5 +6,5 @@ import es.atrujillo.mjml.util.StringConstants
 internal data class MjmlResponse(val html: String = StringConstants.EMPTY,
                                  val mjml: String = StringConstants.EMPTY,
                                  @JsonProperty("mjml_version")
-                                 val mjmlVersion: String = StringConstants.EMPTY,
+                                 val mjmlVersion: Double = 0.0,
                                  val errors: List<MjmlError> = emptyList())
