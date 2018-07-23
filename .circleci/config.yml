@@ -16,6 +16,9 @@ jobs:
 
     working_directory: ~/repo
 
+    test:
+      parallelism: 4
+
     environment:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx516m
