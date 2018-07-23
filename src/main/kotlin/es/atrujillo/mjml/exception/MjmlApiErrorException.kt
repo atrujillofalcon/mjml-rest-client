@@ -6,5 +6,5 @@ import org.springframework.http.HttpStatus
 /**
  * Exception throwed when API response is not successfully
  */
-class MjmlApiErrorException(mjmlApiError: MjmlApiError, statusCode: HttpStatus)
+open class MjmlApiErrorException(mjmlApiError: MjmlApiError, statusCode: HttpStatus)
     : RuntimeException("API Error ${statusCode.value()} - ${mjmlApiError.message}")

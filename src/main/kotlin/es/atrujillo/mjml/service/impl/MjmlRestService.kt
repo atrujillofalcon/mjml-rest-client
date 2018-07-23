@@ -2,15 +2,16 @@ package es.atrujillo.mjml.service.impl
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import es.atrujillo.mjml.exception.MjmlApiErrorException
+import es.atrujillo.mjml.exception.MjmlApiUnsupportedVersionException
 import es.atrujillo.mjml.model.mjml.MjmlApiError
 import es.atrujillo.mjml.model.mjml.MjmlRequest
 import es.atrujillo.mjml.model.mjml.MjmlResponse
 import es.atrujillo.mjml.rest.BasicAuthRestClient
 import es.atrujillo.mjml.service.auth.MjmlAuth
 import es.atrujillo.mjml.service.definition.MjmlService
-import es.atrujillo.mjml.util.StringConstants
 import es.atrujillo.mjml.util.logError
 import org.springframework.core.ParameterizedTypeReference
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpStatusCodeException
 
@@ -34,9 +35,12 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
         try {
             val responseEntity = restClient.post(request, TRANSPILE_RENDER_MJML_PATH, object : ParameterizedTypeReference<MjmlResponse>() {})
             if (responseEntity.statusCode.is2xxSuccessful) {
-                return responseEntity
-                        .let { response: ResponseEntity<MjmlResponse> -> response.body }
-                        ?.let { body -> body.html } ?: StringConstants.EMPTY
+                val response: MjmlResponse? = responseEntity.let { response: ResponseEntity<MjmlResponse> -> response.body }
+                if (response != null) {
+                    validateMjmlVersion(mjmlBody, response)
+                    return response.html
+                }
+                throw MjmlApiErrorException(MjmlApiError(EMPTY_RESPONSE_ERROR_MESSAGE), HttpStatus.NOT_FOUND)
             }
 
             throw MjmlApiErrorException(MjmlApiError(responseEntity.statusCode.reasonPhrase), responseEntity.statusCode)
@@ -48,7 +52,14 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
         }
     }
 
+    private fun validateMjmlVersion(requestBody: String, response: MjmlResponse) {
+        if (!requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.getMajorVersion() < 4.0)
+            throw MjmlApiUnsupportedVersionException(response.mjmlVersion)
+    }
+
     companion object {
         private const val TRANSPILE_RENDER_MJML_PATH = "/render"
+        private const val DEPRECATED_MJML_ELEMENT = "mj-container"
+        private const val EMPTY_RESPONSE_ERROR_MESSAGE = "Not response body found"
     }
 }
