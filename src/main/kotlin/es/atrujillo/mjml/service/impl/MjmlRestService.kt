@@ -53,7 +53,7 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
     }
 
     private fun validateMjmlVersion(requestBody: String, response: MjmlResponse) {
-        if (!requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.getMajorVersion() >= 4.0)
+        if (!requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.getMajorVersion() < 4.0)
             throw MjmlApiUnsupportedVersionException(response.mjmlVersion)
     }
 
