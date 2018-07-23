@@ -52,9 +52,9 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
     }
 
     private fun validateMjmlVersion(requestBody: String, response: MjmlResponse) {
-        if (requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.mjmlVersion >= 4.0)
+        if (requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.getMajorVersion() >= 4.0)
             throw MjmlApiErrorException(MjmlApiError("Sended MJML template is invalid with current API version (${response.mjmlVersion}). " +
-                    "Please, use a valid ${response.mjmlVersion} template."), HttpStatus.BAD_REQUEST)
+                    "Please, use a valid ${response.mjmlVersion} supported template."), HttpStatus.BAD_REQUEST)
     }
 
     companion object {
