@@ -11,11 +11,12 @@ import java.net.URI
 
 /**
  * Rest client with BasicAuth integrated
- * Each request will have the basic auth token
+ * Each request going to have configured the basic auth token
+ * {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication}
  *
  * @author Arnaldo Trujillo
  * @param <R>
-</R> */
+ */
 internal class BasicAuthRestClient<R>(apiEndpoint: String, private val applicationID: String, private val secretKey: String) : HttpRestClient<R>(apiEndpoint) {
 
     init {

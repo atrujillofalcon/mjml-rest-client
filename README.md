@@ -1,6 +1,7 @@
 # Mjml Rest Client
 
 [![CircleCI](https://circleci.com/gh/atrujillofalcon/mjml-rest-client.svg?style=svg)](https://circleci.com/gh/atrujillofalcon/mjml-rest-client)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/38e786b08ee544ec81e4dffc1fc3e5dd)](https://app.codacy.com/app/atrujillo92work/mjml-rest-client?utm_source=github.com&utm_medium=referral&utm_content=atrujillofalcon/mjml-rest-client&utm_campaign=badger)
 [![codecov](https://codecov.io/gh/atrujillofalcon/mjml-rest-client/branch/develop/graph/badge.svg)](https://codecov.io/gh/atrujillofalcon/mjml-rest-client)
 
 
@@ -27,13 +28,13 @@ To include this library into your project your only need to add the dependency.
 <dependency>
     <groupId>es.atrujillo.mjml</groupId>
     <artifactId>mjml-rest-client</artifactId>
-    <version>1.4.5</version>
+    <version>1.5.0</version>
 </dependency>
 ```
 
 **Gradle**:
 ```groovy
-compile "es.atrujillo.mjml:mjml-rest-client:1.4.5"
+compile "es.atrujillo.mjml:mjml-rest-client:1.5.0"
 ```
 
 ## Usage

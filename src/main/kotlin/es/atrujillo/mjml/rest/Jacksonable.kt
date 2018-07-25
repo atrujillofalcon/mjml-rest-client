@@ -10,5 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
  */
 internal interface Jacksonable {
 
+    /**
+     * Return the previusly configured ObjectMapper of library context
+     *
+     * @see ObjectMapper
+     * @return ObjectMapper
+     */
     fun getObjectMapper(): ObjectMapper
 }

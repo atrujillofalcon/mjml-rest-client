@@ -2,6 +2,7 @@ package es.atrujillo.mjml.integration.service
 
 import es.atrujillo.mjml.config.template.TemplateFactory
 import es.atrujillo.mjml.exception.MjmlApiErrorException
+import es.atrujillo.mjml.exception.MjmlApiUnsupportedVersionException
 import es.atrujillo.mjml.service.auth.MjmlAuthFactory
 import es.atrujillo.mjml.service.impl.MjmlRestService
 import es.atrujillo.mjml.util.TestUtils.*
@@ -35,7 +36,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Integration API test")
-    fun testThatMjmlApiRespondCorrectly() {
+    internal fun testThatMjmlApiRespondCorrectly() {
 
         assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
         assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")
@@ -57,7 +58,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Test Error Handling with Invalid Credentials")
-    fun testThatApiReturnErrorWithoutValidCredentials() {
+    internal fun testThatApiReturnErrorWithoutValidCredentials() {
 
         val invalidAppId = UUID.randomUUID().toString()
         val invalidSecretKey = UUID.randomUUID().toString()
@@ -78,7 +79,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Test Thymeleaf Error When Malformed Template")
-    fun testThatTemplateBuildingReturnErrorWithMalformedTemplate() {
+    internal fun testThatTemplateBuildingReturnErrorWithMalformedTemplate() {
 
         Assertions.assertThrows(TemplateInputException::class.java) {
             TemplateFactory.builder()
@@ -93,7 +94,7 @@ internal class MjmlRestServiceKtTest {
      */
     @Test
     @DisplayName("Test Error Handling with Invalid Template")
-    fun testThatApiReturnErrorWithInvalidTemplate() {
+    internal fun testThatApiReturnErrorWithInvalidTemplate() {
 
         assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
         assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")
@@ -111,6 +112,32 @@ internal class MjmlRestServiceKtTest {
         val mjmlService = MjmlRestService(authConf)
 
         Assertions.assertThrows(MjmlApiErrorException::class.java) { mjmlService.transpileMjmlToHtml(invalidTemplate) }
+
+    }
+
+    /**
+     * Test that unsupported version mjml template return error
+     */
+    @Test
+    @DisplayName("Test Error Handling with Invalid Supported Version")
+    internal fun testThatVersion4TemplateReturnHandledError() {
+
+        assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
+        assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")
+
+        val unsupportedVersionTemplate = TemplateFactory.builder()
+                .withStringTemplate()
+                .template(MJML_VERSION4_TEMPLATE)
+                .buildTemplate()
+
+        val authConf = MjmlAuthFactory.builder()
+                .withEnvironmentCredentials()
+                .mjmlKeyNames(MJML_APP_ID, MJML_SECRET_KEY)
+                .build()
+
+        val mjmlService = MjmlRestService(authConf)
+
+        Assertions.assertThrows(MjmlApiUnsupportedVersionException::class.java) { mjmlService.transpileMjmlToHtml(unsupportedVersionTemplate) }
 
     }
 

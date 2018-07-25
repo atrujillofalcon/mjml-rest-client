@@ -8,11 +8,11 @@ import java.io.File
 import java.net.URL
 import java.util.*
 
-class TemplateFactoryTest {
+internal class TemplateFactoryTest {
 
     @Test
     @DisplayName("Test Build String Template")
-    fun testBuildStringTemplate() {
+    internal fun testBuildStringTemplate() {
         val template = TemplateFactory.builder()
                 .withStringTemplate()
                 .template(HELLO_WORLD_MJML)
@@ -23,7 +23,7 @@ class TemplateFactoryTest {
 
     @Test
     @DisplayName("Test that build fails if template is not set")
-    fun whenBuildStringTemplateWithoutSetTemplate() {
+    internal fun whenBuildStringTemplateWithoutSetTemplate() {
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             TemplateFactory.builder()
                     .withStringTemplate()
@@ -40,7 +40,7 @@ class TemplateFactoryTest {
 
     @Test
     @DisplayName("Test Build File Template With Context")
-    fun testBuildFileTemplate() {
+    internal fun testBuildFileTemplate() {
         val fileTemplate = File(
                 Objects.requireNonNull<URL>(javaClass.classLoader.getResource("template/test_template.xml"))
                         .file)
@@ -65,7 +65,7 @@ class TemplateFactoryTest {
 
     @Test
     @DisplayName("Test Build File Template With Context")
-    fun whenBuildFileTemplateWithIvalidFilePath() {
+    internal fun whenBuildFileTemplateWithIvalidFilePath() {
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             val invalidFile = File("/invalid/path/template.xml")
 

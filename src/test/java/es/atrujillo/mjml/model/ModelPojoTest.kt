@@ -10,23 +10,23 @@ import pl.pojo.tester.api.assertion.Assertions
 import pl.pojo.tester.api.assertion.Method
 import kotlin.reflect.KClass
 
-class ModelPojoTest {
+internal class ModelPojoTest {
 
     @Test
     @DisplayName("Test MjmlApiError POJO")
-    fun testPojoMjmlApiError() = testPojoObject(MjmlApiError::class)
+    internal fun testPojoMjmlApiError() = testPojoObject(MjmlApiError::class)
 
     @Test
     @DisplayName("Test MjmlError POJO")
-    fun testPojoMjmlError() = testPojoObject(MjmlError::class)
+    internal fun testPojoMjmlError() = testPojoObject(MjmlError::class)
 
     @Test
     @DisplayName("Test MjmlRequest POJO")
-    fun testPojoMjmlRequest() = testPojoObject(MjmlRequest::class)
+    internal fun testPojoMjmlRequest() = testPojoObject(MjmlRequest::class)
 
     @Test
     @DisplayName("Test MjmlResponse POJO")
-    fun testPojoMjmlResponse() = testPojoObject(MjmlResponse::class)
+    internal fun testPojoMjmlResponse() = testPojoObject(MjmlResponse::class)
 
 
     private fun testPojoObject(pojoClass: KClass<*>) {
