@@ -114,8 +114,7 @@ Finally, we just need to instantiate our client with the credentials obtained
  and use it to convert the template into the final HTML to send it to whoever we want.
 
 ```java
-MjmlAuthConf authConf = new MemoryMjmlAuthConf(applicationId, secretKey);
-MjmlService mjmlService = new MjmlRestService(authConf);
+MjmlService mjmlService = new MjmlRestService(authConfInstance);
 
 String resultHtmlMail = mjmlService.transpileMjmlToHtml(mjmlTemplate);
 //after obtain the html you can send it using your email service implementation.
