@@ -2,7 +2,7 @@ import net.researchgate.release.GitAdapter
 
 buildscript {
     ext.kotlin_version = '1.2.51'
-    ext.spring_version = '5.0.7.RELEASE'
+    ext.spring_version = '5.0.8.RELEASE'
     ext.jackson_version = '2.9.6'
     ext.thymeleaf_version = '3.0.9.RELEASE'
     ext.junit5_version = '5.2.0'
