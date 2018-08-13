@@ -48,12 +48,35 @@ We have two options for templating mjml mails. In-memory String or File.
 
 #### File templates
 
-Lets see how create the template from a file source
+Now we're going to see how create the template from a file source to create a fun mail. Let's imagine that we have a Thymeleaf template in a file called readme-template.mjml with the following content:
+
+```xml
+<mjml>
+    <mj-body>
+        <mj-container>
+            <mj-section>
+                <mj-column>
+                    <mj-text font-style="bold" align="center" color="#8B9C36"><h1 th:text="${myTitle}"></h1></mj-text>
+                    <mj-text font-style="bold" align="center" color="#8B9C36"><h3 th:text="${myDescription}"></h3></mj-text>
+                    <mj-carousel>
+                        <mj-carousel-image src="https://unblogdecode.es/gallery/dog1.jpg"/>
+                        <mj-carousel-image src="https://unblogdecode.es/gallery/dog2.jpg"/>
+                        <mj-carousel-image src="https://unblogdecode.es/gallery/dog3.jpg"/>
+                    </mj-carousel>
+                </mj-column>
+            </mj-section>
+        </mj-container>
+    </mj-body>
+</mjml>
+```
+
+If we look, we have two variables: **myTitle** and **myDescription** that we're going to replace dynamically. Let's see how use the File Template mode:
 
 ```java
-File fileTemplate = new File("/path/to/mjml/template.xml");
+File fileTemplate = new File("/path/to/mjml/readme-template.mjml");
 Context contextVars = new Context();
-contextVars.setVariable("message","Hello MJML");
+contextVars.setVariable("myTitle","Dog Gallery");
+contextVars.setVariable("message","This is my dog Bilbo, modeling for the camera");
        
 String mjmlTemplate = TemplateFactory.builder()
                .type(TemplateType.FILE)
@@ -61,6 +84,11 @@ String mjmlTemplate = TemplateFactory.builder()
                .templateContext(contextVars)
                .buildTemplate();                
  ```
+ 
+**Final Result of Template**
+
+![Mjml Screenshoot](https://unblogdecode.es/gallery/mjm-screenshoot.png)
+ 
 #### In-Memory String templates
 
 ```java

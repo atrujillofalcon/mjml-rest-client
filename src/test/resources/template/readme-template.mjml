@@ -1,0 +1,17 @@
+<mjml>
+    <mj-body>
+        <mj-container>
+            <mj-section>
+                <mj-column>
+                    <mj-text font-style="bold" align="center" color="#8B9C36"><h1 th:text="${myTitle}"></h1></mj-text>
+                    <mj-text font-style="bold" align="center" color="#8B9C36"><h3 th:text="${myDescription}"></h3></mj-text>
+                    <mj-carousel>
+                        <mj-carousel-image src="https://unblogdecode.es/gallery/dog1.jpg"/>
+                        <mj-carousel-image src="https://unblogdecode.es/gallery/dog2.jpg"/>
+                        <mj-carousel-image src="https://unblogdecode.es/gallery/dog3.jpg"/>
+                    </mj-carousel>
+                </mj-column>
+            </mj-section>
+        </mj-container>
+    </mj-body>
+</mjml>
