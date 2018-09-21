@@ -7,12 +7,14 @@ import es.atrujillo.mjml.service.auth.MjmlAuthFactory
 import es.atrujillo.mjml.service.impl.MjmlRestService
 import es.atrujillo.mjml.util.TestUtils.*
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.thymeleaf.context.Context
 import org.thymeleaf.exceptions.TemplateInputException
+import java.io.File
+import java.net.URL
 import java.util.*
 
 /**
@@ -51,6 +53,45 @@ internal class MjmlRestServiceKtTest {
 
         assertNotNull(response)
         assertFalse(response.isEmpty())
+    }
+
+    /**
+     * Test that valid mjml template is converted to html using MjmlService
+     */
+    @Test
+    @DisplayName("Readme Template API test")
+    internal fun testThatReadmeTemplateExampleIsCorrect() {
+
+        assertNotNull(MJML_APP_ID, "You have to configure environment variable MJML_APP_ID")
+        assertNotNull(MJML_SECRET_KEY, "You have to configure environment variable MJML_SECRET_KEY")
+
+        val readmeTemplate = File(Objects.requireNonNull<URL>(javaClass.classLoader.getResource("template/readme-template.mjml")).file)
+
+        val title = "Dog Gallery"
+        val description = "This is my dog Bilbo, modeling for the camera"
+
+        val context = Context(Locale.getDefault())
+        context.setVariable("myTitle", title)
+        context.setVariable("myDescription", description)
+
+        template = TemplateFactory.builder()
+                .withFileTemplate()
+                .template(readmeTemplate)
+                .templateContext(context)
+                .buildTemplate()
+
+        val authConf = MjmlAuthFactory.builder()
+                .withEnvironmentCredentials()
+                .mjmlKeyNames(MJML_APP_ID, MJML_SECRET_KEY)
+                .build()
+
+        val mjmlService = MjmlRestService(authConf)
+        val response = mjmlService.transpileMjmlToHtml(template)
+
+        assertNotNull(response)
+        assertFalse(response.isEmpty())
+        assertTrue(response.contains(title))
+        assertTrue(response.contains(description))
     }
 
     /**

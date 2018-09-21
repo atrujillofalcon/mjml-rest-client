@@ -1,11 +1,11 @@
 import net.researchgate.release.GitAdapter
 
 buildscript {
-    ext.kotlin_version = '1.2.51'
-    ext.spring_version = '5.0.7.RELEASE'
-    ext.jackson_version = '2.9.6'
+    ext.kotlin_version = '1.2.70'
+    ext.spring_version = '5.0.9.RELEASE'
+    ext.jackson_version = '2.9.7'
     ext.thymeleaf_version = '3.0.9.RELEASE'
-    ext.junit5_version = '5.2.0'
+    ext.junit5_version = '5.3.1'
     ext.dokka_version = '0.9.17'
 
     repositories {
@@ -64,7 +64,7 @@ dependencies {
 //    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
     testImplementation "org.mockito:mockito-core:2.20.0"
     testImplementation "org.springframework:spring-test:$spring_version"
-    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.8'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.9'
     testImplementation 'pl.pojo:pojo-tester:0.7.6'
 
 }
