@@ -64,7 +64,7 @@ dependencies {
 //    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
     testImplementation "org.mockito:mockito-core:2.20.0"
     testImplementation "org.springframework:spring-test:$spring_version"
-    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.9'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.1'
     testImplementation 'pl.pojo:pojo-tester:0.7.6'
 
 }
