@@ -48,7 +48,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
 
-    implementation "org.apache.httpcomponents:httpclient:4.5.7"
+    implementation "org.apache.httpcomponents:httpclient:4.5.8"
 //    implementation "javax.validation:validation-api:2.0.1.Final"
 
     //Template with thymeleaf
