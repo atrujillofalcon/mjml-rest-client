@@ -56,7 +56,7 @@ dependencies {
 
     //Logging API
     api "org.slf4j:slf4j-api:1.7.26"
-    testImplementation 'org.slf4j:slf4j-simple:1.7.26'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.27'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
