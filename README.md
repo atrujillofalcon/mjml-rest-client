@@ -81,7 +81,7 @@ contextVars.setVariable("myTitle","Dog Gallery");
 contextVars.setVariable("message","This is my dog Bilbo, modeling for the camera");
        
 String mjmlTemplate = TemplateFactory.builder()
-               .type(TemplateType.FILE)
+               .withFileTemplate()
                .template(fileTemplate)
                .templateContext(contextVars)
                .buildTemplate();                
