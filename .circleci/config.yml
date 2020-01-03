@@ -40,6 +40,6 @@ jobs:
         
       # run tests!
       - run: gradle test jacocoTestReport
-      - run: bash <(curl -s https://codecov.io/bash) -t 407b777f-3b55-4bf7-aaea-a44e1a6ef7f9
+      - run: bash <(curl -s https://codecov.io/bash) -t 28d5c82d-b6ff-4503-8387-9f3548e5d92c
 
 
