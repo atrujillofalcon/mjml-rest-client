@@ -56,10 +56,9 @@ dependencies {
 
     //Logging API
     api "org.slf4j:slf4j-api:1.7.28"
-    testImplementation 'org.slf4j:slf4j-simple:1.7.27'
-
+    testImplementation 'org.slf4j:slf4j-simple:1.7.28'    
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
+    
     testImplementation "org.junit.jupiter:junit-jupiter:$junit5_version"
     testImplementation 'org.mockito:mockito-junit-jupiter:2.23.4'
     testImplementation 'org.jeasy:easy-random-core:4.0.0'
