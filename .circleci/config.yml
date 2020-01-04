@@ -42,4 +42,7 @@ jobs:
       - run: gradle test jacocoTestReport
       - run: bash <(curl -s https://codecov.io/bash) -t 28d5c82d-b6ff-4503-8387-9f3548e5d92c
 
+      - store_test_results:
+          path: test-results
+
 
