@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -20,7 +20,7 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx516m
       TERM: dumb
-    
+
     steps:
       - checkout
 
@@ -37,7 +37,7 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-        
+
       # run tests!
       - run: gradle test jacocoTestReport
       - run: bash <(curl -s https://codecov.io/bash) -t 28d5c82d-b6ff-4503-8387-9f3548e5d92c
@@ -48,9 +48,7 @@ jobs:
             mkdir -p ~/test-results/junit/
             find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
-            - store_test_results:
-                path: ~/test-results
-            - store_artifacts:
-                path: ~/test-results/junit
-
-
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
