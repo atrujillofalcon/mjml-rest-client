@@ -30,13 +30,13 @@ To include this library into your project your only need to add the dependency.
 <dependency>
     <groupId>es.atrujillo.mjml</groupId>
     <artifactId>mjml-rest-client</artifactId>
-    <version>1.5.1</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 **Gradle**:
 ```groovy
-compile "es.atrujillo.mjml:mjml-rest-client:1.5.1"
+compile "es.atrujillo.mjml:mjml-rest-client:2.0.0"
 ```
 
 ## Usage
@@ -81,7 +81,7 @@ contextVars.setVariable("myTitle","Dog Gallery");
 contextVars.setVariable("message","This is my dog Bilbo, modeling for the camera");
        
 String mjmlTemplate = TemplateFactory.builder()
-               .type(TemplateType.FILE)
+               .withFileTemplate()
                .template(fileTemplate)
                .templateContext(contextVars)
                .buildTemplate();                
