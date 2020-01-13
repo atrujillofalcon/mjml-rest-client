@@ -10,6 +10,7 @@ import es.atrujillo.mjml.rest.BasicAuthRestClient
 import es.atrujillo.mjml.service.auth.MjmlAuth
 import es.atrujillo.mjml.service.definition.MjmlService
 import es.atrujillo.mjml.util.logError
+import es.atrujillo.mjml.util.logWarn
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -53,11 +54,18 @@ class MjmlRestService(private val authConf: MjmlAuth) : MjmlService {
     }
 
     private fun validateMjmlVersion(requestBody: String, response: MjmlResponse) {
-        if (!requestBody.contains(DEPRECATED_MJML_ELEMENT) && response.getMajorVersion() < 4.0)
+        if (response.getMajorVersion() < 4.0 && !requestBody.contains(DEPRECATED_MJML_ELEMENT))
             throw MjmlApiUnsupportedVersionException(response.mjmlVersion)
+
+        if(response.errors.isNotEmpty()){
+            response.errors.forEach {
+                logWarn(it.formattedMessage)
+            }
+        }
     }
 
     companion object {
+
         private const val TRANSPILE_RENDER_MJML_PATH = "/render"
         private const val DEPRECATED_MJML_ELEMENT = "mj-container"
         private const val EMPTY_RESPONSE_ERROR_MESSAGE = "Not response body found"

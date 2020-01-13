@@ -1,11 +1,11 @@
 import net.researchgate.release.GitAdapter
 
 buildscript {
-    ext.kotlin_version = '1.2.51'
-    ext.spring_version = '5.0.7.RELEASE'
-    ext.jackson_version = '2.9.6'
-    ext.thymeleaf_version = '3.0.9.RELEASE'
-    ext.junit5_version = '5.2.0'
+    ext.kotlin_version = '1.3.61'
+    ext.spring_version = '5.1.9.RELEASE'
+    ext.jackson_version = '2.10.1'
+    ext.thymeleaf_version = '3.0.11.RELEASE'
+    ext.junit5_version = '5.5.1'
     ext.dokka_version = '0.9.17'
 
     repositories {
@@ -48,23 +48,23 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
 
-    implementation "org.apache.httpcomponents:httpclient:4.5.6"
+    implementation "org.apache.httpcomponents:httpclient:4.5.9"
 //    implementation "javax.validation:validation-api:2.0.1.Final"
 
     //Template with thymeleaf
     api "org.thymeleaf:thymeleaf:$thymeleaf_version"
 
     //Logging API
-    api "org.slf4j:slf4j-api:1.7.25"
-    testImplementation 'org.slf4j:slf4j-simple:1.7.25'
-
+    api "org.slf4j:slf4j-api:1.7.28"
+    testImplementation 'org.slf4j:slf4j-simple:1.7.28'    
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
-//    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
-    testImplementation "org.mockito:mockito-core:2.20.0"
-    testImplementation "org.springframework:spring-test:$spring_version"
-    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.8'
+    
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit5_version"
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.23.4'
+    testImplementation 'org.jeasy:easy-random-core:4.1.0'
+    testImplementation 'org.jeasy:easy-random-randomizers:4.0.0'
+    testImplementation 'org.jeasy:easy-random-bean-validation:4.0.0'
+    testImplementation 'io.github.glytching:junit-extensions:2.3.0'
     testImplementation 'pl.pojo:pojo-tester:0.7.6'
 
 }
