@@ -60,7 +60,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     
     testImplementation "org.junit.jupiter:junit-jupiter:$junit5_version"
-    testImplementation 'org.mockito:mockito-junit-jupiter:2.23.4'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.4.6'
     testImplementation 'org.jeasy:easy-random-core:4.1.0'
     testImplementation 'org.jeasy:easy-random-randomizers:4.0.0'
     testImplementation 'org.jeasy:easy-random-bean-validation:4.0.0'
