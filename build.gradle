@@ -19,7 +19,7 @@ buildscript {
 
 plugins {
     id 'net.researchgate.release' version '2.7.0'
-    id "com.jfrog.bintray" version "1.8.4"
+    id "com.jfrog.bintray" version "1.8.5"
 }
 
 group 'es.atrujillo.mjml'
