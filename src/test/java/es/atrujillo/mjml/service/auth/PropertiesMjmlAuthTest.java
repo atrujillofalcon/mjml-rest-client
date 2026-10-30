@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import java.net.URI;
 import java.util.*;
@@ -27,15 +25,11 @@ class PropertiesMjmlAuthTest {
         appIdVal = UUID.randomUUID().toString();
         secretKeyVal = UUID.randomUUID().toString();
 
-        properties = Mockito.mock(Properties.class);
-        Set<String> propKeys = new HashSet<>(Arrays.asList(appIDPropKey, secretKeyPropKey));
+        properties = new Properties();
+        properties.setProperty(appIDPropKey, appIdVal);
+        properties.setProperty(secretKeyPropKey, secretKeyVal);
 
-        Mockito.when(properties.stringPropertyNames()).thenReturn(propKeys);
-        Mockito.when(properties.getProperty(ArgumentMatchers.eq(appIDPropKey))).thenReturn(appIdVal);
-        Mockito.when(properties.getProperty(ArgumentMatchers.eq(secretKeyPropKey))).thenReturn(secretKeyVal);
-
-        URI mockURI = Mockito.mock(URI.class);
-        Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
+        URI mockURI = URI.create(DUMMY_URI_STRING);
 
         mjmlAuth = MjmlAuthFactory.builder()
                 .withPropertiesCredential()

@@ -18,7 +18,7 @@ import java.io.File
  *
  * @author Arnaldo Trujillo
  */
-class TemplateFactory private constructor(templateEngine: TemplateEngine) {
+class TemplateFactory private constructor() {
 
     /**
      * Initial build step

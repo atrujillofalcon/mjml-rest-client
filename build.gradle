@@ -1,204 +1,76 @@
-import net.researchgate.release.GitAdapter
-
-buildscript {
-    ext.kotlin_version = '1.3.61'
-    ext.spring_version = '5.1.9.RELEASE'
-    ext.jackson_version = '2.10.1'
-    ext.thymeleaf_version = '3.0.11.RELEASE'
-    ext.junit5_version = '5.5.1'
-    ext.dokka_version = '0.9.17'
-
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
-    }
-}
-
 plugins {
-    id 'net.researchgate.release' version '2.7.0'
-    id "com.jfrog.bintray" version "1.8.4"
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm' version '2.4.21'
+    id 'org.jetbrains.dokka' version '2.2.0'
+    id 'jacoco'
+    id 'com.vanniktech.maven.publish' version '0.37.0'
 }
 
-group 'es.atrujillo.mjml'
-version project.property('version')
-
-
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'jacoco'
-apply plugin: 'org.jetbrains.dokka'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
+group = 'es.atrujillo.mjml'
+version = project.property('version')
+repositories { mavenCentral() }
+kotlin { jvmToolchain(21) }
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
 
 dependencies {
-    //Spring dependencies
-    implementation "org.springframework:spring-web:$spring_version"
-
-    //Jackson dependencies
-    implementation "com.fasterxml.jackson.core:jackson-core:$jackson_version"
-    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
-
-    implementation "org.apache.httpcomponents:httpclient:4.5.9"
-//    implementation "javax.validation:validation-api:2.0.1.Final"
-
-    //Template with thymeleaf
-    api "org.thymeleaf:thymeleaf:$thymeleaf_version"
-
-    //Logging API
-    api "org.slf4j:slf4j-api:1.7.28"
-    testImplementation 'org.slf4j:slf4j-simple:1.7.28'    
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    
-    testImplementation "org.junit.jupiter:junit-jupiter:$junit5_version"
-    testImplementation 'org.mockito:mockito-junit-jupiter:2.23.4'
-    testImplementation 'org.jeasy:easy-random-core:4.1.0'
-    testImplementation 'org.jeasy:easy-random-randomizers:4.0.0'
-    testImplementation 'org.jeasy:easy-random-bean-validation:4.0.0'
-    testImplementation 'io.github.glytching:junit-extensions:2.3.0'
-    testImplementation 'pl.pojo:pojo-tester:0.7.6'
-
+    api 'com.squareup.okhttp3:okhttp-jvm:5.5.1'
+    implementation platform('com.fasterxml.jackson:jackson-bom:2.21.8')
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    api 'org.thymeleaf:thymeleaf:3.1.5.RELEASE'
+    api 'org.slf4j:slf4j-api:2.0.20'
+    testImplementation platform('org.junit:junit-bom:6.1.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.20'
 }
 
-dokka {
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
-    includeNonPublic = true
+test { useJUnitPlatform { excludeTags 'live' } }
+tasks.register('liveTest', Test) {
+    description = 'Calls the real MJML API using MJML_APP_ID and MJML_SECRET_KEY.'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform { includeTags 'live' }
+    doFirst {
+        ['MJML_APP_ID', 'MJML_SECRET_KEY'].each {
+            if (!System.getenv(it)) throw new GradleException("Missing environment variable: $it")
+        }
+    }
 }
-
-test {
-    useJUnitPlatform()
-}
-
+jacoco { toolVersion = '0.8.16' }
 jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled false
-    }
+    dependsOn test
+    reports { xml.required = true; html.required = true }
 }
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-//Script to generate valid Maven Central pom.xml
-def pomConfig = {
-    licenses {
-        license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
-        }
-    }
-    developers {
-        developer {
-            id "atrujillo"
-            name "Arnaldo Trujillo"
-            email "atrujillo92work@gmail.com"
-        }
-    }
-
-    scm {
-        url "https://github.com/atrujillofalcon/mjml-rest-client"
-    }
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: dokka) {
-    classifier = 'javadoc'
-    from dokka
-}
-
-
-publishing {
-    publications {
-        MavenCentral(MavenPublication) {
-            from components.java
-            groupId 'es.atrujillo.mjml'
-            artifactId 'mjml-rest-client'
-            artifact sourcesJar
-            artifact javadocJar
-            version project.property('version')
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', 'Java library that use the mjml API')
-                root.appendNode('name', 'Mjml Rest Client')
-                root.appendNode('url', 'https://github.com/atrujillofalcon/mjml-rest-client')
-                root.children().last() + pomConfig
-            }
+mavenPublishing {
+    coordinates(project.group.toString(), 'mjml-rest-client', project.version.toString())
+    publishToMavenCentral(true, com.vanniktech.maven.publish.DeploymentValidation.PUBLISHED)
+    if (providers.gradleProperty('signingInMemoryKey').isPresent()) signAllPublications()
+    pom {
+        name = 'Mjml Rest Client'
+        description = 'Framework-independent JVM client for the MJML rendering API, with Thymeleaf templates.'
+        url = 'https://github.com/atrujillofalcon/mjml-rest-client'
+        licenses { license { name = 'Apache License, Version 2.0'; url = 'https://www.apache.org/licenses/LICENSE-2.0.txt' } }
+        developers { developer { id = 'atrujillo'; name = 'Arnaldo Trujillo'; email = 'atrujillo92work@gmail.com' } }
+        scm {
+            url = 'https://github.com/atrujillofalcon/mjml-rest-client'
+            connection = 'scm:git:https://github.com/atrujillofalcon/mjml-rest-client.git'
+            developerConnection = 'scm:git:ssh://git@github.com/atrujillofalcon/mjml-rest-client.git'
         }
     }
 }
-//End of script to generate valid Maven Central pom.xml
+publishing { repositories { maven { name = 'verification'; url = layout.buildDirectory.dir('verification-repository') } } }
 
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    configurations = ['archives']
-    publications = ['MavenCentral']
-    pkg {
-        repo = 'mjml-rest-client'
-        name = 'mjml-rest-client-release'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/atrujillofalcon/mjml-rest-client.git'
+// Keep framework coupling out of the published runtime dependency graph.
+tasks.register('verifyRuntimeDependencies') {
+    group = 'verification'
+    doLast {
+        def forbidden = configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.findAll {
+            it.moduleVersion.id.group.startsWith('org.springframework') ||
+                it.moduleVersion.id.group.startsWith('org.apache.httpcomponents')
+        }
+        if (!forbidden.isEmpty()) throw new GradleException("Unexpected HTTP framework dependencies: $forbidden")
     }
 }
-
-release {
-    failOnCommitNeeded = true
-    failOnPublishNeeded = true
-    failOnSnapshotDependencies = true
-    failOnUnversionedFiles = false
-    failOnUpdateNeeded = true
-    revertOnFail = true
-    preCommitText = ''
-    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
-    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
-    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
-    tagTemplate = '${version}'
-    versionPropertyFile = 'gradle.properties'
-    scmAdapters = [
-            GitAdapter,
-    ]
-
-    git {
-        requireBranch = 'develop'
-        pushToRemote = 'origin'
-        pushToBranchPrefix = ''
-        commitVersionFileOnly = false
-    }
-}
-
-afterReleaseBuild.dependsOn bintrayUpload
-
-preTagCommit.doFirst {
-    // Maven
-    ant.replaceregexp(match: '<version>(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?<\\/version>', replace: "<version>${version}</version>", flags: 'g', byline: true) {
-        fileset(dir: '.', includes: 'README.md')
-    }
-    // Gradle
-    ant.replaceregexp(match: 'es\\.atrujillo\\.mjml\\:mjml-rest-client\\:(\\d)+.(\\d)+.(\\d)+(-SNAPSHOT)?', replace: "es.atrujillo.mjml:mjml-rest-client:${version}", flags: 'g', byline: true) {
-        fileset(dir: '.', includes: 'README.md')
-    }
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
+tasks.named('check') { dependsOn 'verifyRuntimeDependencies' }

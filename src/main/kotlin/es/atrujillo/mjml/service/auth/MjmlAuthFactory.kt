@@ -60,7 +60,7 @@ class MjmlAuthFactory private constructor() {
          * @param mjmlAppId Mjml Api applicationId
          * @param mjmlSecretKey Mjml Api secret key
          */
-        fun mjmlCredentials(mjmlAppId: String, mjmlSecretKey: String): BuildStep
+        fun mjmlCredentials(mjmlAppId: String?, mjmlSecretKey: String?): BuildStep
     }
 
     /**
@@ -74,7 +74,7 @@ class MjmlAuthFactory private constructor() {
         /**
          * Set properties file where search mjml credentials         *
          */
-        fun properties(properties: Properties): EnvAuthStep
+        fun properties(properties: Properties?): EnvAuthStep
     }
 
     /**
@@ -85,7 +85,7 @@ class MjmlAuthFactory private constructor() {
         /**
          * Set credentials key names
          */
-        fun mjmlKeyNames(mjmlAppIdKeyName: String, mjmlSecretKeyName: String): BuildStep
+        fun mjmlKeyNames(mjmlAppIdKeyName: String?, mjmlSecretKeyName: String?): BuildStep
     }
 
     /**
@@ -100,7 +100,7 @@ class MjmlAuthFactory private constructor() {
         /**
          * Change the default MJML Api endpoint
          */
-        fun changeEndpoint(endpoint: URI): BuildStep
+        fun changeEndpoint(endpoint: URI?): BuildStep
     }
 
     companion object {
@@ -139,20 +139,20 @@ class MjmlAuthFactory private constructor() {
                 return this
             }
 
-            override fun mjmlCredentials(mjmlAppId: String, mjmlSecretKey: String): BuildStep {
-                this.mjmlAppId = mjmlAppId
-                this.mjmlSecretKey = mjmlSecretKey
+            override fun mjmlCredentials(mjmlAppId: String?, mjmlSecretKey: String?): BuildStep {
+                this.mjmlAppId = requireNotNull(mjmlAppId)
+                this.mjmlSecretKey = requireNotNull(mjmlSecretKey)
                 return this
             }
 
-            override fun properties(properties: Properties): EnvAuthStep {
-                this.properties = properties
+            override fun properties(properties: Properties?): EnvAuthStep {
+                this.properties = requireNotNull(properties)
                 return this
             }
 
-            override fun mjmlKeyNames(mjmlAppIdKeyName: String, mjmlSecretKeyName: String): BuildStep {
-                this.appIdKeyName = mjmlAppIdKeyName
-                this.secretKeyName = mjmlSecretKeyName
+            override fun mjmlKeyNames(mjmlAppIdKeyName: String?, mjmlSecretKeyName: String?): BuildStep {
+                this.appIdKeyName = requireNotNull(mjmlAppIdKeyName)
+                this.secretKeyName = requireNotNull(mjmlSecretKeyName)
                 return this
             }
 
@@ -164,8 +164,8 @@ class MjmlAuthFactory private constructor() {
                 }
             }
 
-            override fun changeEndpoint(endpoint: URI): BuildStep {
-                this.endpoint = endpoint
+            override fun changeEndpoint(endpoint: URI?): BuildStep {
+                this.endpoint = requireNotNull(endpoint)
                 return this
             }
 

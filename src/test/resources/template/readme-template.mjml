@@ -1,6 +1,6 @@
 <mjml>
     <mj-body>
-        <mj-container>
+
             <mj-section>
                 <mj-column>
                     <mj-text font-style="bold" align="center" color="#8B9C36"><h1 th:text="${myTitle}"></h1></mj-text>
@@ -12,6 +12,6 @@
                     </mj-carousel>
                 </mj-column>
             </mj-section>
-        </mj-container>
+
     </mj-body>
 </mjml>

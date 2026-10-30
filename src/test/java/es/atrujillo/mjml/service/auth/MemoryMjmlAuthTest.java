@@ -3,7 +3,6 @@ package es.atrujillo.mjml.service.auth;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.net.URI;
 import java.util.UUID;
@@ -32,8 +31,7 @@ class MemoryMjmlAuthTest {
         Assertions.assertEquals(appID, mjmlAuth.getMjmlApplicationId());
         Assertions.assertEquals(secretKey, mjmlAuth.getMjmlApplicationSecretKey());
 
-        URI mockURI = Mockito.mock(URI.class);
-        Mockito.when(mockURI.toString()).thenReturn(DUMMY_URI_STRING);
+        URI mockURI = URI.create(DUMMY_URI_STRING);
         mjmlAuth = MjmlAuthFactory.builder()
                 .withMemoryCredentials()
                 .mjmlCredentials(appID, secretKey)

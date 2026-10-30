@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * @author Arnaldo Trujillo
  */
+@org.junit.jupiter.api.Tag("live")
 class MjmlRestServiceJavaTest {
 
 

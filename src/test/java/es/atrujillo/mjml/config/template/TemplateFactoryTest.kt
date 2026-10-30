@@ -77,7 +77,7 @@ internal class TemplateFactoryTest {
     }
 
     companion object {
-        private const val HELLO_WORLD_MJML = "<mjml><mj-body><mj-container><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-container></mj-body></mjml>"
+        private const val HELLO_WORLD_MJML = "<mjml><mj-body><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-body></mjml>"
     }
 
 }

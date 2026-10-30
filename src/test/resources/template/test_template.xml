@@ -1,6 +1,6 @@
 <mjml>
     <mj-body>
-        <mj-container>
+
             <mj-section>
                 <mj-column>
                     <mj-text th:text="${message}"></mj-text>
@@ -12,6 +12,6 @@
                     <mj-text>Negative Column</mj-text>
                 </mj-column>
             </mj-section>
-        </mj-container>
+
     </mj-body>
 </mjml>

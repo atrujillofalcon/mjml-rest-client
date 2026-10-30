@@ -18,12 +18,13 @@ import java.util.*
 /**
  * @author Arnaldo Trujillo
  */
+@org.junit.jupiter.api.Tag("live")
 internal class MjmlRestServiceKtTest {
 
     private lateinit var template: String
 
     @BeforeEach
-    private fun setUpTests() {
+    fun setUpTests() {
         template = TemplateFactory.builder()
                 .withStringTemplate()
                 .template(HELLO_WORLD_MJML)
